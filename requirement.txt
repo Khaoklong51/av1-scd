@@ -1,0 +1,8 @@
+scenedetect<0.7
+vstools
+vapoursynth
+pymediainfo
+opencv-python
+colorama
+termcolor
+tqdm
