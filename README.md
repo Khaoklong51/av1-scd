@@ -2,12 +2,12 @@
 
 Tool to quickly detect scene change and generate config file for encoder to force keyframe for Encoding video.
 
-[Encoder format](#support-encoder-format)
-[Scene detection method](#support-scene-detection-method)
-[Dependencies](#dependencies)
-[Checking Keyframe of video](#checking-keyframe-of-video)
-[Usage](#usage)
-[Parameter](#parameter)
+- [Encoder format](#support-encoder-format)
+- [Scene detection method](#support-scene-detection-method)
+- [Dependencies](#dependencies)
+- [Checking Keyframe of video](#checking-keyframe-of-video)
+- [Usage](#usage)
+- [Parameter](#parameter)
 
 ## Support encoder format
 
@@ -19,7 +19,7 @@ Tool to quickly detect scene change and generate config file for encoder to forc
 
 ## Support scene detection method
 
-- [Pyscenedetect](https://github.com/Breakthrough/PySceneDetect) (all method)
+- [Pyscenedetect](https://github.com/Breakthrough/PySceneDetect)
 - [WWXD](https://github.com/dubhater/vapoursynth-wwxd) and [Scxvid](https://github.com/dubhater/vapoursynth-scxvid) (vapoursynth)
 - [av-scenechange](https://github.com/rust-av/av-scenechange)
 
@@ -36,7 +36,7 @@ if any dependencies is missing it will error out anyway.
 
 ## Checking Keyframe of video
 
-1. Use [LosslessCut](https://github.com/mifi/lossless-cut)
+1. Use [LosslessCut](https://github.com/mifi/lossless-cut) to check
 2. FFprobe command : The command list keyframe of video
 
 - Bash (linux)
