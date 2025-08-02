@@ -2,6 +2,7 @@
 
 Tool to quickly detect scene change and generate config file for encoder to force keyframe for Encoding video.
 
+- [Installation](#installtion)
 - [Encoder format](#support-encoder-format)
 - [Scene detection method](#support-scene-detection-method)
 - [Dependencies](#dependencies)
@@ -56,11 +57,7 @@ awk -F',' -v fps="$fps" '/K/ {printf "%.0f\n", $1 * fps}'
 
 The report keyframe may differ slightly (usually 1,2 or 3 frames) depend on program (This is normal)
 
-## Installation
-
-wheel build file available in release
-
-## Build from Source
+## Installtion
 
 1. Build wheel
 
