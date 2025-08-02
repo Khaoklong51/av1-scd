@@ -6,9 +6,7 @@ import importlib.util as imu
 
 parser = argparse.ArgumentParser(description=f"py-video-encode {predefined.VERSION}")
 parser.add_argument("-i", "--input", type=str, required=True, help="Path to input file.")
-parser.add_argument(
-    "-o", "--output", type=str, required=True, help="Path to output file."
-)
+parser.add_argument("-o", "--output", type=str, help="Path to output file.")
 parser.add_argument(
     "--min-scene-len", type=int, default=-2, help="min lenght for scene detection"
 )
