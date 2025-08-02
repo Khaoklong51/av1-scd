@@ -1,5 +1,6 @@
 from . import option
 
+
 def process_keyframe(keyframes: list[int], frame_count: int) -> list[int]:
     min_kf_dist = option.min_scene_len
     max_kf_dist = option.max_scene_len
@@ -20,7 +21,9 @@ def process_keyframe(keyframes: list[int], frame_count: int) -> list[int]:
 
         # Insert intermediate keyframes if too long
         x = 1
-        while frame_diff >= max_kf_dist and (curr - (prev + max_kf_dist * x)) >= min_kf_dist:
+        while (frame_diff >= max_kf_dist) and (
+            curr - (prev + max_kf_dist * x)
+        ) >= min_kf_dist:
             split_point = prev + max_kf_dist * x
             keyframes_cut.append(split_point)
             x += 1

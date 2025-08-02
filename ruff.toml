@@ -1,0 +1,21 @@
+line-length = 90
+indent-width = 4
+exclude = ["test*"]
+fix = false
+respect-gitignore = true
+
+[lint]
+# Add the `line-too-long` rule to the enforced rule set. By default, Ruff omits rules that
+# overlap with the use of a formatter, like Black, but we can override this behavior by
+# explicitly adding the rule.
+extend-select = ["E501"]
+
+[format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+skip-magic-trailing-comma = true
+
+[analyze]
+detect-string-imports = true
+direction = "dependencies"

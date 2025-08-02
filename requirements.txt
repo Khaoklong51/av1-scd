@@ -1,6 +1,6 @@
 scenedetect<0.7
 vstools
-vapoursynth
+vapoursynth>=71
 pymediainfo
 opencv-python
 colorama
