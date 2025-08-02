@@ -6,3 +6,4 @@ opencv-python
 colorama
 termcolor
 tqdm
+pre-commit

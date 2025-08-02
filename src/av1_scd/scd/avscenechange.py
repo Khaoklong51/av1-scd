@@ -1,6 +1,6 @@
 import shutil
 import subprocess
-from .. import option
+from av1_scd import option
 import json
 import tqdm
 import re

@@ -2,7 +2,7 @@ import colorama
 import termcolor as tcolor
 import logging
 import sys
-from . import option
+from av1_scd import option
 
 
 log_level = option.log_level

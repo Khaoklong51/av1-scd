@@ -1,5 +1,5 @@
 import pymediainfo as pym
-from . import log, predefined, option
+from av1_scd import log, predefined, option
 import typing as typ
 
 vid_data = dict[str, typ.Any]

@@ -1,4 +1,4 @@
-from . import option
+from av1_scd import option
 
 
 def process_keyframe(keyframes: list[int], frame_count: int) -> list[int]:

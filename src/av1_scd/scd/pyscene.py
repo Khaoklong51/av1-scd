@@ -1,6 +1,6 @@
 import scenedetect as sc
-from .. import option
-from .. import log
+from av1_scd import option
+from av1_scd import log
 
 
 min_kf_dist: int = option.min_scene_len

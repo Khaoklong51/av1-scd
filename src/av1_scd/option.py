@@ -1,6 +1,6 @@
 import argparse
 import shutil
-from . import predefined
+from av1_scd import predefined
 import importlib.util as imu
 
 
@@ -130,11 +130,11 @@ def get_lib() -> dict[str, bool]:
         "tqdm": False,
     }
 
-    available_lib["vapoursynth"] = True if imu.find_spec("vapoursnth") else False
+    available_lib["vapoursynth"] = True if imu.find_spec("vapoursynth") else False
 
     available_lib["vstools"] = True if imu.find_spec("vstools") else False
 
-    available_lib["mediainfo"] = True if imu.find_spec("pymediainfo") else False
+    available_lib["mediainfo"] = True if imu.find_spec("mediainfo") else False
 
     available_lib["opencv"] = True if imu.find_spec("cv2") else False
 
@@ -144,7 +144,7 @@ def get_lib() -> dict[str, bool]:
 
     available_lib["tqdm"] = True if imu.find_spec("tdqm") else False
 
-    available_lib["pyscene"] = True if imu.find_spec("pyscene") else False
+    available_lib["pyscene"] = True if imu.find_spec("scenedetect") else False
 
     av_scene_path = shutil.which("av-scenechange")
     if av_scene_path is not None:
@@ -169,7 +169,7 @@ def validate_lib() -> None:
 
     if lib_dict["mediainfo"]:
         log.error_log(
-            "pymediainfo is unavailable. install it with\n pip install mediainfo"
+            "pymediainfo is unavailable. install it with\n pip install pymediainfo"
         )
     if scd_method == ALL_SCD_METHOD[0] and not lib_dict["pyscene"]:
         log.error_log(

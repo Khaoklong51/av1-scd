@@ -1,7 +1,7 @@
-from .. import option
+from av1_scd import option
 import vapoursynth as vs
 import vstools
-from .. import log
+from av1_scd import log
 
 
 min_kf_dist = option.min_scene_len

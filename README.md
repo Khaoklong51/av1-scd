@@ -25,7 +25,7 @@ Tool to quickly detect scene change and generate config file for encoder to forc
 
 ## Dependencies
 
-This is not require dependencies for a full list for python packages checkout requirement.txt\
+This is not require dependencies for a full list for python packages checkout requirements.txt\
 if any dependencies is missing it will error out anyway.
 
 - [Pymediainfo](https://github.com/sbraz/pymediainfo)
@@ -56,23 +56,50 @@ awk -F',' -v fps="$fps" '/K/ {printf "%.0f\n", $1 * fps}'
 
 The report keyframe may differ slightly (usually 1,2 or 3 frames) depend on program (This is normal)
 
+## Installation
+
+wheel build file available in release
+
+## Build from Source
+
+1. Build wheel
+
+   ```bash
+   git clone https://github.com/Khaoklong51/av1-scd.git
+   cd av1-scd
+   python -m build --wheel # or 'uv build' if you have uv.
+   pipx install dist/*.whl
+    ```
+
+2. Pyinstaller (experimental)
+
+   ```bash
+   pyinstaller av1-scd.spec --clean
+   ```
+
 ## Usage
 
-`python main.py -i input.mp4 -o x265.cfg -f x265`
+`av1-scd -i input.mp4 -o x265.cfg -f x265`
 
 ## Parameter
 
 ```text
+usage: av1-scd [-h] -i INPUT -o OUTPUT [--min-scene-len MIN_SCENE_LEN] [--max-scene-len MAX_SCENE_LEN] [--scd-method {pyscene,vsxvid,av-scenechange}] [--track TRACK]
+               -f {x264,x265,svt-av1,av1an,av1an-git,ffmpeg} [--print] [--log-level {debug,info,warning,error}] [--pysc-decode {opencv,pyav,moviepy}]
+               [--pysc-method {adaptive,content,threshold,hash,histogram}] [--pysc-downscale {auto,<class 'int'>}] [--vs-source {bestsource,ffms2,lsmash}]
+
+py-video-encode v1.0.0
+
 options:
   -h, --help            show this help message and exit
   -i, --input INPUT     Path to input file.
   -o, --output OUTPUT   Path to output file.
-  --min-scence-len MIN_SCENCE_LEN
-                        min lenght for scence detection
-  --max-scence-len MAX_SCENCE_LEN
-                        max lenght for scence detection
+  --min-scene-len MIN_SCENE_LEN
+                        min lenght for scene detection
+  --max-scene-len MAX_SCENE_LEN
+                        max lenght for scene detection
   --scd-method {pyscene,vsxvid,av-scenechange}
-                        scence detection method
+                        scene detection method
   --track TRACK         Track number for video (Index start at 1). Default is 1
   -f, --format {x264,x265,svt-av1,av1an,av1an-git,ffmpeg}
                         format of keyframe to feed program.
@@ -81,7 +108,7 @@ options:
                         log level output to console. Default is info.
 
 pyscene:
-  extra option for pyscence scence detection method
+  extra option for pyscene scene detection method
 
   --pysc-decode {opencv,pyav,moviepy}
                         Decode method for pyscene detect. Default is opencv.
@@ -91,7 +118,7 @@ pyscene:
                         Downscale factor for pyscene detect method, can be either auto or number(int). To disable set this to 1. Default is auto.
 
 vapoursynth:
-  extra option for vapousynth to perform vsxvid scene detection method
+  extra option for vapousynth to perform vs-xvid scene detection method
 
   --vs-source {bestsource,ffms2,lsmash}
                         Source method for vapoursynth. Default is ffms2.

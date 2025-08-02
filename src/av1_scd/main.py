@@ -1,5 +1,5 @@
 import os
-from src import option, mediainfo, keyframes, cfg, log
+from av1_scd import option, mediainfo, keyframes, cfg, log
 
 
 input_file = option.input_file
@@ -56,18 +56,18 @@ def main():
     keyframe_list = []
     # already validata library
     if scd_method == ALL_SCD_METHOD[0]:
-        from src.scd import pyscene
+        from av1_scd.scd import pyscene
 
         log.info_log(f"Use scene method '{ALL_SCD_METHOD[0]}'")
         keyframe_list = pyscene.get_keyframe_pyscene(input_file)
     elif scd_method == ALL_SCD_METHOD[1]:
-        from src.scd import vsxvid
+        from av1_scd.scd import vsxvid
 
         log.info_log(f"Use scene method '{ALL_SCD_METHOD[1]}'")
         vid_height = mediainfo.get_vid_height(track_data)
         keyframe_list = vsxvid.get_keyframe_vsxvid(input_file, vid_height)
     elif scd_method == ALL_SCD_METHOD[2]:
-        from src.scd import avscenechange
+        from av1_scd.scd import avscenechange
 
         log.info_log(f"Use scene method '{ALL_SCD_METHOD[2]}'")
         pix_fmt = mediainfo.get_ffmpeg_pixfmt(track_data)
@@ -105,6 +105,3 @@ def main():
         print(enc_data)
     else:
         print(get_print_final())
-
-
-main()
