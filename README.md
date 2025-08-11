@@ -28,7 +28,7 @@ Tool to quickly detect scene change and generate config file for encoder to forc
 
 ## Dependencies
 
-This is not require dependencies for a full list for python packages checkout requirements.txt or pypreject.toml\
+This is not require dependencies for a full list for python packages checkout pyproject.toml\
 if any dependencies is missing it will error out anyway.
 
 - [Pymediainfo](https://github.com/sbraz/pymediainfo)

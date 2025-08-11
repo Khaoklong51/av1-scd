@@ -2,9 +2,6 @@ colorama
 numpy
 opencv-python
 pymediainfo
+scenedetect<0.7
 termcolor
 tqdm
-scenedetect<0.7
-vstools
-vapoursynth>=71
-onnxruntime
