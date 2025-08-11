@@ -1,6 +1,6 @@
 # av1-scd
 
-Tool to quickly detect scene change and generate config file for encoder to force keyframe for Encoding video.
+Command line tool to quickly detect scene change and generate config file for encoder to force keyframe for Encoding video.
 
 - [Installation](#installtion)
 - [Encoder format](#support-encoder-format)
