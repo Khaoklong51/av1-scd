@@ -40,7 +40,7 @@ def get_keyframe_pyscene(input_path: str) -> list:
             sc.HistogramDetector(min_scene_len=min_kf_dist, threshold=local_threshold)
         )
 
-    log.info_log(f"Pyscene method '{pysc_method}'")
+    log.info_log(f"Pyscene method {pysc_method}")
 
     log.info_log(f"Pyscene downscale {pysc_down_factor}")
     if isinstance(pysc_down_factor, int):
