@@ -95,11 +95,11 @@ options:
   -i, --input INPUT     Path to input file.
   -o, --output OUTPUT   Path to output file.
   --min-scene-len MIN_SCENE_LEN
-                        min lenght for scene detection
+                        min lenght for scene detection. Default is 1 sec of video
   --max-scene-len MAX_SCENE_LEN
-                        max lenght for scene detection
+                        max lenght for scene detection. Default is 10 sec of viddeo
   --scd-method {pyscene,vsxvid,av-scenechange,ffmpeg-scene,ffmpeg-scdet,transnetv2}
-                        scene detection method
+                        scene detection method. Default is pyscene
   --track TRACK         Track number for video (Index start at 1). Default is 1
   -f, --format {x264,x265,svt-av1,av1an,av1an-git,ffmpeg}
                         format of keyframe to feed program.

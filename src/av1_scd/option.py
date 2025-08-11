@@ -6,10 +6,16 @@ parser = argparse.ArgumentParser(description=f"py-video-encode {predefined.VERSI
 parser.add_argument("-i", "--input", type=str, required=True, help="Path to input file.")
 parser.add_argument("-o", "--output", type=str, help="Path to output file.")
 parser.add_argument(
-    "--min-scene-len", type=int, default=-2, help="min lenght for scene detection"
+    "--min-scene-len",
+    type=int,
+    default=-2,
+    help="min lenght for scene detection. Default is 1 sec of video",
 )
 parser.add_argument(
-    "--max-scene-len", type=int, default=-2, help="max lenght for scene detection"
+    "--max-scene-len",
+    type=int,
+    default=-2,
+    help="max lenght for scene detection. Default is 10 sec of viddeo",
 )
 ALL_SCD_METHOD = [
     "pyscene",
@@ -23,7 +29,7 @@ parser.add_argument(
     "--scd-method",
     type=str,
     choices=ALL_SCD_METHOD,
-    help="scene detection method",
+    help="scene detection method. Default is pyscene",
     default=ALL_SCD_METHOD[0],
 )
 parser.add_argument(
