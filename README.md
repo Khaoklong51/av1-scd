@@ -72,7 +72,8 @@ The report keyframe may differ slightly (usually 1,2 or 3 frames) depend on prog
    git clone https://github.com/Khaoklong51/av1-scd.git
    cd av1-scd
    python -m build --wheel # or 'uv build' if you have uv.
-   pipx install dist/*.whl
+   pipx install dist/*.whl # install minimal dependencies
+   pipx install dist/*.whl[vsxvid,transnet] # install with optional vsxvid and transnet dependencies. All option are [vsxvid, transnet, pyscene]
     ```
 
 ## Usage
