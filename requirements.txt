@@ -1,9 +1,10 @@
+colorama
+numpy
+opencv-python
+pymediainfo
+termcolor
+tqdm
 scenedetect<0.7
 vstools
 vapoursynth>=71
-pymediainfo
-opencv-python
-colorama
-termcolor
-tqdm
-pre-commit
+onnxruntime

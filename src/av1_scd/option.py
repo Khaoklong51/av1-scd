@@ -1,7 +1,5 @@
 import argparse
-import shutil
 from av1_scd import predefined
-import importlib.util as imu
 
 
 parser = argparse.ArgumentParser(description=f"py-video-encode {predefined.VERSION}")
@@ -13,7 +11,14 @@ parser.add_argument(
 parser.add_argument(
     "--max-scene-len", type=int, default=-2, help="max lenght for scene detection"
 )
-ALL_SCD_METHOD = ["pyscene", "vsxvid", "av-scenechange"]
+ALL_SCD_METHOD = [
+    "pyscene",
+    "vsxvid",
+    "av-scenechange",
+    "ffmpeg-scene",
+    "ffmpeg-scdet",
+    "transnetv2",
+]
 parser.add_argument(
     "--scd-method",
     type=str,
@@ -50,8 +55,11 @@ parser.add_argument(
     default=LOG_LEVEL[1],
     help="log level output to console. Default is info.",
 )
-# parser.add_argument('--hw-decode', action='store_true', default=False,
-# help='use hw acceleration to decode video')
+parser.add_argument(
+    "--treshold", type=float, default=-2, help="treshold for scene change"
+)
+# parser.add_argument("--hw-decode", action="store_true", default=False,
+# help="use hw acceleration to decode video")
 
 parser1 = parser.add_argument_group(
     "pyscene", description="extra option for pyscene scene detection method"
@@ -95,6 +103,17 @@ parser2.add_argument(
     default=_VALID_METHOD4[1],
     help="Source method for vapoursynth. Default is ffms2.",
 )
+parser2.add_argument(
+    "--vsxvid-height",
+    type=int,
+    default=None,
+    help="Height for vsxvid processing. Default is video height.",
+)
+
+parser3 = parser.add_argument_group("transnet", "Extra option for transnetv2 model")
+parser3.add_argument(
+    "--transnet-model", type=str, default=None, help="Path to onnx transet model"
+)
 
 
 args = parser.parse_args()
@@ -112,93 +131,6 @@ user_track: int = args.track - 1
 enc_format: str = args.format
 is_print: bool = args.print
 log_level: str = args.log_level
-
-
-def get_lib() -> dict[str, bool]:
-    available_lib = {
-        "vapoursynth": False,
-        "pyscene": False,
-        "av_scenechange": False,
-        "ffmpeg": False,
-        "mediainfo": False,
-        "vstools": False,
-        "opencv": False,
-        "colorama": False,
-        "termcolor": False,
-        "tqdm": False,
-    }
-
-    available_lib["vapoursynth"] = True if imu.find_spec("vapoursynth") else False
-
-    available_lib["vstools"] = True if imu.find_spec("vstools") else False
-
-    available_lib["mediainfo"] = True if imu.find_spec("mediainfo") else False
-
-    available_lib["opencv"] = True if imu.find_spec("cv2") else False
-
-    available_lib["colorama"] = True if imu.find_spec("colorama") else False
-
-    available_lib["termcolor"] = True if imu.find_spec("termcolor") else False
-
-    available_lib["tqdm"] = True if imu.find_spec("tdqm") else False
-
-    available_lib["pyscene"] = True if imu.find_spec("scenedetect") else False
-
-    av_scene_path = shutil.which("av-scenechange")
-    if av_scene_path is not None:
-        available_lib["av_scenechange"] = True
-
-    ffmpeg_path = shutil.which("ffmpeg")
-    if ffmpeg_path is not None:
-        available_lib["ffmpeg"] = True
-
-    return available_lib
-
-
-def validate_lib() -> None:
-    lib_dict = get_lib()
-
-    if not lib_dict["colorama"]:
-        print("colorama is unavailable. install it with\npip install colorama")
-    if not lib_dict["termcolor"]:
-        print("termcolor is unavailable. install it with\npip install termcolor")
-
-    from . import log
-
-    if lib_dict["mediainfo"]:
-        log.error_log(
-            "pymediainfo is unavailable. install it with\n pip install pymediainfo"
-        )
-    if scd_method == ALL_SCD_METHOD[0] and not lib_dict["pyscene"]:
-        log.error_log(
-            f"{ALL_SCD_METHOD[0]} method is unavailable. install it with\n"
-            "pip install scenedetect"
-        )
-    if scd_method == ALL_SCD_METHOD[1] and (
-        not lib_dict["vapoursynth"] or not lib_dict["vstools"]
-    ):
-        if not lib_dict["vapoursynth"]:
-            log.error_log(
-                f"{ALL_SCD_METHOD[1]} method is unavailable. install vapoursynth"
-            )
-        else:
-            log.error_log(
-                f"{ALL_SCD_METHOD[2]} method is unavailable. install it with\n"
-                "pip install vstools"
-            )
-    if (
-        scd_method == ALL_SCD_METHOD[2]
-        and (not lib_dict["av_scenechange"] or not lib_dict["ffmpeg"])
-        and not lib_dict["tqdm"]
-    ):
-        if not lib_dict["ffmpeg"]:
-            log.error_log("ffmepg is unavailable. install ffmpeg to the path")
-        elif not lib_dict["av_scenechange"]:
-            log.error_log(
-                f"{ALL_SCD_METHOD[2]} method is unavailable. "
-                "install av-scenechange binary to path"
-            )
-        elif not lib_dict["tqdm"]:
-            log.error_log("tqdm is unavilable. install it with\npip install tqdm")
-
-    log.debug_log(f"All Library Check {lib_dict}")
+treshold: float = args.treshold
+transnet_model_path: str | None = args.transnet_model
+vsxvid_height: int | None = args.vsxvid_height

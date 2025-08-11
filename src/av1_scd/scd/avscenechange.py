@@ -1,9 +1,8 @@
 import shutil
 import subprocess
-from av1_scd import option
+from av1_scd import option, util
 import json
 import tqdm
-import re
 import threading
 
 
@@ -32,7 +31,7 @@ def get_keyframe_avscenechange(input_path: str, pix_fmt: str, frame_count: int) 
         def read_stderr():
             if p1.stderr:
                 for line in p1.stderr:
-                    _track_progress(line, pbar)
+                    util.track_ffmepg_progress(line, pbar)
 
         t = threading.Thread(target=read_stderr)
         t.start()
@@ -41,21 +40,15 @@ def get_keyframe_avscenechange(input_path: str, pix_fmt: str, frame_count: int) 
         p1.wait()
         t.join()
 
+        pbar.n = frame_count
+        pbar.refresh()
         pbar.close()
 
-    scene_list = _process_scene_file(stdout_data)
+    scene_list = _process_scene_data(stdout_data)
     return scene_list
 
 
-def _track_progress(text: str, pbar: tqdm.tqdm):
-    match = re.search(r"frame=(\d+)", text)
-    if match:
-        frame = int(match.group(1))
-        pbar.n = frame
-        pbar.refresh()
-
-
-def _process_scene_file(content: str) -> list:
+def _process_scene_data(content: str) -> list:
     scene_list = []
 
     json_data = json.loads(content)

@@ -24,9 +24,9 @@ def _check_vs_source():
         log.error_log(
             "bestsource is unavailable. Install https://github.com/vapoursynth/bestsource"
         )
-    if vs_decode == ALL_SOURCE_METHOD[1] and not vs_source["ffms2"]:
+    elif vs_decode == ALL_SOURCE_METHOD[1] and not vs_source["ffms2"]:
         log.error_log("ffms2 is unavailable. Install https://github.com/FFMS/ffms2")
-    if vs_decode == ALL_SOURCE_METHOD[2] and not vs_source["lsmash"]:
+    elif vs_decode == ALL_SOURCE_METHOD[2] and not vs_source["lsmash"]:
         log.error_log(
             "lsmash is unavailable. Install https://github.com/HomeOfAviSynthPlusEvolution/L-SMASH-Works"
         )
@@ -49,7 +49,7 @@ def _prepare_video(input_path: str):
 def get_keyframe_vsxvid(input_path: str, vid_height: int) -> list:
     _check_vs_source()
     clip = _prepare_video(input_path)
+    log.debug_log(f"Video height for vsxvid {vid_height}")
     keyframes = vstools.Keyframes.from_clip(clip, 0, height=vid_height)
 
-    frames = [fr for fr in keyframes]
-    return frames
+    return [fr for fr in keyframes]

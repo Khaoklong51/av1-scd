@@ -97,6 +97,4 @@ def get_scene_ffmpeg(scene_list: list[int]) -> str:
     for i in scene_list:
         cfg_data += f"eq(n,{i})+"
 
-    cfg_data = cfg_data.removesuffix("+")
-
-    return cfg_data
+    return cfg_data.removesuffix("+")

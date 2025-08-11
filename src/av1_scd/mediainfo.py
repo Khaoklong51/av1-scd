@@ -48,8 +48,13 @@ def get_frame_count(track_data: vid_data) -> int:
 
 
 def get_scene_len(track_data: vid_data) -> tuple[int, int]:
-    log.debug_log(f"Framerate {str(track_data['frame_rate'])}")
-    frame_rate = float(track_data["frame_rate"])
+    frame_rate = get_framerate(track_data)
     min_len = round(frame_rate)
     max_len = round(frame_rate * 5)
     return min_len, max_len
+
+
+def get_framerate(track_data: vid_data) -> float:
+    log.debug_log(f"Framerate {str(track_data['frame_rate'])}")
+    frame_rate = float(track_data["frame_rate"])
+    return frame_rate

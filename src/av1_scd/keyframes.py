@@ -32,5 +32,4 @@ def process_keyframe(keyframes: list[int], frame_count: int) -> list[int]:
         if (curr - keyframes_cut[-1]) >= min_kf_dist:
             keyframes_cut.append(curr)
 
-    keyframes_cut = sorted(set(keyframes_cut))  # remove duplicates
-    return keyframes_cut
+    return sorted(set(keyframes_cut))

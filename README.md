@@ -23,10 +23,12 @@ Tool to quickly detect scene change and generate config file for encoder to forc
 - [Pyscenedetect](https://github.com/Breakthrough/PySceneDetect)
 - [WWXD](https://github.com/dubhater/vapoursynth-wwxd) and [Scxvid](https://github.com/dubhater/vapoursynth-scxvid) (vapoursynth)
 - [av-scenechange](https://github.com/rust-av/av-scenechange)
+- [ffmpeg](https://www.ffmpeg.org/) (using scene score and scdet filter)
+- [TransNetV2](https://github.com/soCzech/TransNetV2.git) This project use onnxruntime and opencv-python not tensorflow in the original project
 
 ## Dependencies
 
-This is not require dependencies for a full list for python packages checkout requirements.txt\
+This is not require dependencies for a full list for python packages checkout requirements.txt or pypreject.toml\
 if any dependencies is missing it will error out anyway.
 
 - [Pymediainfo](https://github.com/sbraz/pymediainfo)
@@ -34,6 +36,11 @@ if any dependencies is missing it will error out anyway.
 - [vapoursynth](https://github.com/vapoursynth/vapoursynth)
 - [ffmpeg](https://www.ffmpeg.org/)
 - [av-scenechange](https://github.com/rust-av/av-scenechange)
+- [opencv-python](https://github.com/opencv/opencv-python)
+- [numpy](https://github.com/numpy/numpy)
+- [tqdm](https://github.com/tqdm/tqdm.git)
+- [onnxruntime](https://github.com/microsoft/onnxruntime)
+- [TransetV2](https://github.com/soCzech/TransNetV2.git) The tensorflow model is in "inference/transnetv2-weights/model" folder of the original project if you want to use with this program you need onnx model which you can download [it here](https://huggingface.co/elya5/transnetv2/tree/main)
 
 ## Checking Keyframe of video
 
@@ -68,12 +75,6 @@ The report keyframe may differ slightly (usually 1,2 or 3 frames) depend on prog
    pipx install dist/*.whl
     ```
 
-2. Pyinstaller (experimental)
-
-   ```bash
-   pyinstaller av1-scd.spec --clean
-   ```
-
 ## Usage
 
 `av1-scd -i input.mp4 -o x265.cfg -f x265`
@@ -81,9 +82,11 @@ The report keyframe may differ slightly (usually 1,2 or 3 frames) depend on prog
 ## Parameter
 
 ```text
-usage: av1-scd [-h] -i INPUT -o OUTPUT [--min-scene-len MIN_SCENE_LEN] [--max-scene-len MAX_SCENE_LEN] [--scd-method {pyscene,vsxvid,av-scenechange}] [--track TRACK]
-               -f {x264,x265,svt-av1,av1an,av1an-git,ffmpeg} [--print] [--log-level {debug,info,warning,error}] [--pysc-decode {opencv,pyav,moviepy}]
+usage: av1-scd [-h] -i INPUT [-o OUTPUT] [--min-scene-len MIN_SCENE_LEN] [--max-scene-len MAX_SCENE_LEN]
+               [--scd-method {pyscene,vsxvid,av-scenechange,ffmpeg-scene,ffmpeg-scdet,transnetv2}] [--track TRACK] -f {x264,x265,svt-av1,av1an,av1an-git,ffmpeg}
+               [--print] [--log-level {debug,info,warning,error}] [--treshold TRESHOLD] [--pysc-decode {opencv,pyav,moviepy}]
                [--pysc-method {adaptive,content,threshold,hash,histogram}] [--pysc-downscale {auto,<class 'int'>}] [--vs-source {bestsource,ffms2,lsmash}]
+               [--vsxvid-height VSXVID_HEIGHT] [--transnet-model TRANSNET_MODEL]
 
 py-video-encode v1.0.0
 
@@ -95,7 +98,7 @@ options:
                         min lenght for scene detection
   --max-scene-len MAX_SCENE_LEN
                         max lenght for scene detection
-  --scd-method {pyscene,vsxvid,av-scenechange}
+  --scd-method {pyscene,vsxvid,av-scenechange,ffmpeg-scene,ffmpeg-scdet,transnetv2}
                         scene detection method
   --track TRACK         Track number for video (Index start at 1). Default is 1
   -f, --format {x264,x265,svt-av1,av1an,av1an-git,ffmpeg}
@@ -103,6 +106,7 @@ options:
   --print               print data to stdout. this will disable the last helper massage.
   --log-level {debug,info,warning,error}
                         log level output to console. Default is info.
+  --treshold TRESHOLD   treshold for scene change
 
 pyscene:
   extra option for pyscene scene detection method
@@ -119,4 +123,12 @@ vapoursynth:
 
   --vs-source {bestsource,ffms2,lsmash}
                         Source method for vapoursynth. Default is ffms2.
+  --vsxvid-height VSXVID_HEIGHT
+                        Height for vsxvid processing. Default is video height.
+
+transnet:
+  Extra option for transnetv2 model
+
+  --transnet-model TRANSNET_MODEL
+                        Path to onnx transet model
 ```
