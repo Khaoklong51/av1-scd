@@ -2,11 +2,11 @@ import scenedetect as sc
 from av1_scd import option, log, predefined
 
 
-min_kf_dist: int = option.min_scene_len
-pysc_decode: str = option.pysc_decode
-pysc_method: str = option.pysc_method
+min_kf_dist = option.min_scene_len
+pysc_decode = option.pysc_decode
+pysc_method = option.pysc_method
 ALL_PYSC_METHOD = option._VALID_METHOD2
-pysc_down_factor: str | int = option.pysc_down_factor
+pysc_down_factor = option.pysc_down_factor
 threshold = option.treshold
 
 
@@ -42,7 +42,7 @@ def get_keyframe_pyscene(input_path: str) -> list:
 
     log.info_log(f"Pyscene method '{pysc_method}'")
 
-    log.debug_log(f"Pyscene downscale {pysc_down_factor}")
+    log.info_log(f"Pyscene downscale {pysc_down_factor}")
     if isinstance(pysc_down_factor, int):
         scene_manager.downscale = pysc_down_factor
     elif isinstance(pysc_down_factor, str) and pysc_down_factor == "auto":
