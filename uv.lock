@@ -78,7 +78,7 @@ requires-dist = [
     { name = "termcolor", specifier = ">=3.1.0" },
     { name = "tqdm", specifier = ">=4.67.1" },
 ]
-provides-extras = ["pyscene", "transnetv2", "vsxvid"]
+provides-extras = ["pyscene", "transnetv2"]
 
 [package.metadata.requires-dev]
 dev = [
