@@ -5,7 +5,7 @@ from av1_scd import option, log, predefined
 min_kf_dist = option.min_scene_len
 pysc_decode = option.pysc_decode
 pysc_method = option.pysc_method
-ALL_PYSC_METHOD = option._VALID_METHOD2
+ALL_PYSC_METHOD = predefined.ALL_PYSC_METHOD
 pysc_down_factor = option.pysc_down_factor
 threshold = option.treshold
 

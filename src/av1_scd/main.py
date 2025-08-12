@@ -1,5 +1,5 @@
 import os
-from av1_scd import option, mediainfo, keyframes, cfg, log, predefined
+from av1_scd import option, mediainfo, keyframes, cfg, log, predefined, validate
 
 
 input_file = option.input_file
@@ -45,6 +45,7 @@ def get_print_final() -> str:
 
 
 def main():
+    validate.validate_pg_lib(scd_method)
     log.info_log("Get mediainfo data")
     track_data = mediainfo.get_pymediainfo_data(input_file)
     # if user does not specify min or max scene use 5 sec framerate

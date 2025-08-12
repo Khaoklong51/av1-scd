@@ -2,6 +2,15 @@ import argparse
 from av1_scd import predefined
 
 
+ALL_VAPOURSYNTH_DECODE = predefined.ALL_VS_SOURCE
+ALL_SCD_METHOD = predefined.ALL_SCD_METHOD
+ALL_CFG_OPT = predefined.ALL_CFG_OPT
+ALL_LOG_LEVEL = predefined.ALL_LOG_LEVEL
+ALL_PYSCENE_DECODE = predefined.ALL_PYSC_DECODE
+ALL_PYSCENE_METHOD = predefined.ALL_PYSC_DECODE
+PYSC_DOWNSCALE = predefined.PYSC_DOWNSCALE
+
+
 parser = argparse.ArgumentParser(description=f"py-video-encode {predefined.VERSION}")
 parser.add_argument("-i", "--input", type=str, required=True, help="Path to input file.")
 parser.add_argument("-o", "--output", type=str, help="Path to output file.")
@@ -17,14 +26,6 @@ parser.add_argument(
     default=-2,
     help="max lenght for scene detection. Default is 10 sec of viddeo",
 )
-ALL_SCD_METHOD = [
-    "pyscene",
-    "vsxvid",
-    "av-scenechange",
-    "ffmpeg-scene",
-    "ffmpeg-scdet",
-    "transnetv2",
-]
 parser.add_argument(
     "--scd-method",
     type=str,
@@ -38,7 +39,6 @@ parser.add_argument(
     default=1,
     help="Track number for video (Index start at 1). Default is 1",
 )
-ALL_CFG_OPT = ["x264", "x265", "svt-av1", "av1an", "av1an-git", "ffmpeg"]
 parser.add_argument(
     "-f",
     "--format",
@@ -53,12 +53,11 @@ parser.add_argument(
     default=False,
     help="print data to stdout. this will disable the last helper massage.",
 )
-LOG_LEVEL = ["debug", "info", "warning", "error"]
 parser.add_argument(
     "--log-level",
     type=str,
-    choices=LOG_LEVEL,
-    default=LOG_LEVEL[1],
+    choices=ALL_LOG_LEVEL,
+    default=ALL_LOG_LEVEL[1],
     help="log level output to console. Default is info.",
 )
 parser.add_argument(
@@ -70,28 +69,25 @@ parser.add_argument(
 parser1 = parser.add_argument_group(
     "pyscene", description="extra option for pyscene scene detection method"
 )
-_VALID_METHOD1 = ["opencv", "pyav", "moviepy"]
 parser1.add_argument(
     "--pysc-decode",
-    choices=_VALID_METHOD1,
+    choices=ALL_PYSCENE_DECODE,
     type=str,
-    default=_VALID_METHOD1[0],
+    default=ALL_PYSCENE_DECODE[0],
     help="Decode method for pyscene detect. Default is opencv.",
 )
-_VALID_METHOD2 = ["adaptive", "content", "threshold", "hash", "histogram"]
 parser1.add_argument(
     "--pysc-method",
-    choices=_VALID_METHOD2,
+    choices=ALL_PYSCENE_METHOD,
     type=str,
-    default=_VALID_METHOD2[0],
+    default=ALL_PYSCENE_METHOD[0],
     help="Scene detect method for pyscene detect. Default is adaptive.",
 )
-_VALID_METHOD3 = ["auto", int]
 parser1.add_argument(
     "--pysc-downscale",
-    choices=_VALID_METHOD3,
+    choices=PYSC_DOWNSCALE,
     type=str or int,
-    default=_VALID_METHOD3[0],
+    default=PYSC_DOWNSCALE[0],
     help="Downscale factor for pyscene detect method, "
     "can be either auto or number(int). "
     "To disable set this to 1. Default is auto.",
@@ -101,12 +97,11 @@ parser2 = parser.add_argument_group(
     "vapoursynth",
     description="extra option for vapousynth to perform vs-xvid scene detection method",
 )
-_VALID_METHOD4 = ["bestsource", "ffms2", "lsmash"]
 parser2.add_argument(
     "--vs-source",
     type=str,
-    choices=_VALID_METHOD4,
-    default=_VALID_METHOD4[1],
+    choices=ALL_VAPOURSYNTH_DECODE,
+    default=ALL_VAPOURSYNTH_DECODE[1],
     help="Source method for vapoursynth. Default is ffms2.",
 )
 parser2.add_argument(
@@ -115,12 +110,10 @@ parser2.add_argument(
     default=None,
     help="Height for vsxvid processing. Default is video height.",
 )
-
 parser3 = parser.add_argument_group("transnet", "Extra option for transnetv2 model")
 parser3.add_argument(
     "--transnet-model", type=str, default=None, help="Path to onnx transet model"
 )
-
 
 args = parser.parse_args()
 

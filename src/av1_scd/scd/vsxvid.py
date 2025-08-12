@@ -1,11 +1,11 @@
-from av1_scd import option
+from av1_scd import option, predefined
 import vapoursynth as vs
 import vstools
 from av1_scd import log
 
 
 min_kf_dist = option.min_scene_len
-ALL_SOURCE_METHOD = option._VALID_METHOD4
+ALL_SOURCE_METHOD = predefined.ALL_VS_SOURCE
 vs_decode = option.vs_source
 core = vs.core
 

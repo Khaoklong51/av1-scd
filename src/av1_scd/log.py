@@ -2,11 +2,11 @@ import colorama
 import termcolor as tcolor
 import logging
 import sys
-from av1_scd import option
+from av1_scd import option, predefined
 
 
 log_level = option.log_level
-LOG_LEVEL = option.LOG_LEVEL
+LOG_LEVEL = predefined.ALL_LOG_LEVEL
 
 
 def check_log_level() -> int | None:
