@@ -61,7 +61,30 @@ def _predictions_to_scenes(
     if local_threshold == -2:
         local_threshold = predefined.THRESHOLD["transnetv2"]
 
-    hard_cuts = np.where(predictions > local_threshold)[0] + 1
+    def smart_split_scene(start: int, end: int) -> list[tuple[int, int]]:
+        """Split a long scene intelligently based on predictions."""
+        result = []
+        cur_start = start
+
+        while end - cur_start > max_scene_len:
+            ideal_split = cur_start + max_scene_len
+            search_start = max(cur_start + min_scene_len, ideal_split - min_scene_len)
+            search_end = min(end - min_scene_len, ideal_split + min_scene_len)
+
+            if search_start >= search_end:
+                split_at = ideal_split  # fallback
+            else:
+                split_at = max(
+                    range(search_start, search_end + 1), key=lambda f: predictions[f]
+                )
+
+            result.append((cur_start, split_at))
+            cur_start = split_at
+
+        result.append((cur_start, end))
+        return result
+
+    hard_cuts = np.where(predictions > threshold)[0] + 1
 
     # Detect fade segments
     is_fade_frame = (soft_predictions >= fade_threshold_low) & (
@@ -77,11 +100,11 @@ def _predictions_to_scenes(
             start_fade = i
         elif not is_fade and in_fade:
             if i - start_fade >= min_fade_len:
-                fade_segments.append([start_fade, i])
+                fade_segments.append([start_fade, i])  # inclusive start, exclusive end
             in_fade = False
 
     if in_fade and (total_frames - start_fade >= min_fade_len):
-        fade_segments.append([start_fade, total_frames])
+        fade_segments.append([start_fade, total_frames])  # inclusive start, exclusive end
 
     # Merge close fades
     merged_fades = []
@@ -100,49 +123,52 @@ def _predictions_to_scenes(
     for cut in hard_cuts:
         for fade_start, fade_end in merged_fades:
             if fade_start <= cut <= fade_end:
-                candidate = fade_end
+                candidate = fade_end  # already exclusive
                 if candidate - fade_start >= min_scene_len:
                     adjusted_cuts.add(candidate)
                 else:
-                    adjusted_cuts.add(fade_start)
+                    adjusted_cuts.add(fade_start)  # fallback to fade start
                 break
         else:
             adjusted_cuts.add(cut)
 
-    all_cuts = adjusted_cuts | {0, total_frames}
+    all_cuts = adjusted_cuts | {0, total_frames}  # total_frames = exclusive end
     all_cuts = sorted(all_cuts)
 
-    # Enforce max scene length
-    scenes = []
-    prev = all_cuts[0]
+    # Initial scene list (no splitting yet)
+    initial_scenes = [(all_cuts[i], all_cuts[i + 1]) for i in range(len(all_cuts) - 1)]
 
-    for cut in all_cuts[1:]:
-        while cut - prev > max_scene_len:
-            scenes.append((prev, prev + max_scene_len))
-            prev += max_scene_len
-        scenes.append((prev, cut))
-        prev = cut
-
-    # Merge too-short scenes forward or backward
+    # Merge too-short scenes
     merged_scenes = []
     idx = 0
-    while idx < len(scenes):
-        start, end = scenes[idx]
+    while idx < len(initial_scenes):
+        start, end = initial_scenes[idx]
         if end - start < min_scene_len:
             if merged_scenes:
+                # merge into previous
                 prev_start, prev_end = merged_scenes.pop()
                 merged_scenes.append((prev_start, end))
-            elif idx + 1 < len(scenes):
-                next_start, next_end = scenes[idx + 1]
-                scenes[idx + 1] = (start, next_end)
+            elif idx + 1 < len(initial_scenes):
+                # merge into next
+                next_start, next_end = initial_scenes[idx + 1]
+                initial_scenes[idx + 1] = (start, next_end)
             else:
+                # last fragment
                 merged_scenes.append((start, end))
             idx += 1
         else:
             merged_scenes.append((start, end))
             idx += 1
 
-    return merged_scenes
+    # Apply max_scene_len splitting
+    split_scenes = []
+    for start, end in merged_scenes:
+        if end - start > max_scene_len:
+            split_scenes.extend(smart_split_scene(start, end))
+        else:
+            split_scenes.append((start, end))
+
+    return split_scenes
 
 
 def transnet_scenes(
