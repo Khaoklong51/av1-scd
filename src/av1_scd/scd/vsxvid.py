@@ -2,6 +2,7 @@ from av1_scd import option, predefined
 import vapoursynth as vs
 import vstools
 from av1_scd import log
+from pathlib import Path
 
 
 min_kf_dist = option.min_scene_len
@@ -46,9 +47,9 @@ def _prepare_video(input_path: str):
     return video
 
 
-def get_keyframe_vsxvid(input_path: str, vid_height: int) -> list:
+def get_keyframe_vsxvid(input_path: Path, vid_height: int) -> list:
     _check_vs_source()
-    clip = _prepare_video(input_path)
+    clip = _prepare_video(str(input_path))
     log.debug_log(f"Video height for vsxvid {vid_height}")
     keyframes = vstools.Keyframes.from_clip(clip, 0, height=vid_height)
 

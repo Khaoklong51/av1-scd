@@ -1,5 +1,6 @@
 import scenedetect as sc
 from av1_scd import option, log, predefined
+from pathlib import Path
 
 
 min_kf_dist = option.min_scene_len
@@ -10,8 +11,8 @@ pysc_down_factor = option.pysc_down_factor
 threshold = option.treshold
 
 
-def get_keyframe_pyscene(input_path: str) -> list:
-    video: sc.VideoStream = sc.open_video(input_path, backend=pysc_decode)
+def get_keyframe_pyscene(input_path: Path) -> list:
+    video: sc.VideoStream = sc.open_video(str(input_path), backend=pysc_decode)
     local_threshold = threshold
     if local_threshold == -2:
         local_threshold = predefined.THRESHOLD[f"pysc-{pysc_method}"]

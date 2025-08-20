@@ -4,20 +4,24 @@ from av1_scd import option, util
 import json
 import tqdm
 import threading
+from pathlib import Path
 
 
 min_kf_dist = option.min_scene_len
 max_kf_dist = option.max_scene_len
 
 
-def get_keyframe_avscenechange(input_path: str, pix_fmt: str, frame_count: int) -> list:
+def get_keyframe_avscenechange(input_path: Path, pix_fmt: str, frame_count: int) -> list:
     params1 = [shutil.which('ffmpeg'), '-progress', 'pipe:2', '-loglevel', 'error' ,
                '-hide_banner', '-i', input_path, '-map', '0:v:0', '-pix_fmt', pix_fmt,
                '-f', 'yuv4mpegpipe', '-strict', '-1', '-']  # fmt: skip
 
     params2 = [shutil.which('av-scenechange'), '-',
-              '--speed', '0', '--min-scenecut', str(min_kf_dist),
-              '--max-scenecut', str(max_kf_dist)]  # fmt: skip
+              '--speed', '0', '--min-scenecut', min_kf_dist,
+              '--max-scenecut', max_kf_dist]  # fmt: skip
+
+    params1 = [str(i) for i in params1]
+    params2 = [str(i) for i in params2]
 
     with tqdm.tqdm(total=frame_count, desc="Processing frames") as pbar:
         p1 = subprocess.Popen(params1, stdout=subprocess.PIPE,

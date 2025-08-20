@@ -1,5 +1,6 @@
 import argparse
 from av1_scd import predefined
+from pathlib import Path
 
 
 ALL_VAPOURSYNTH_DECODE = predefined.ALL_VS_SOURCE
@@ -117,8 +118,8 @@ parser3.add_argument(
 
 args = parser.parse_args()
 
-input_file: str = args.input
-output_file: str = args.output
+input_file: Path = Path(args.input)
+output_file: Path = Path(args.output)
 scd_method: str = args.scd_method
 min_scene_len: int = args.min_scene_len
 max_scene_len: int = args.max_scene_len
@@ -131,5 +132,5 @@ enc_format: str = args.format
 is_print: bool = args.print
 log_level: str = args.log_level
 treshold: float = args.treshold
-transnet_model_path: str | None = args.transnet_model
+transnet_model_path: Path = Path(args.transnet_model)
 vsxvid_height: int | None = args.vsxvid_height

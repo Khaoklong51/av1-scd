@@ -3,6 +3,7 @@ import numpy as np
 import tqdm
 import onnxruntime as ort
 from av1_scd import option, predefined, log
+from pathlib import Path
 
 min_scene_len = option.min_scene_len
 max_scene_len = option.max_scene_len
@@ -11,8 +12,8 @@ model_path = option.transnet_model_path
 gpu_providers = predefined.GPU_PROVIDER
 
 
-def _extract_frames_opencv(input_path: str, frame_count: int, target_size=(48, 27)):
-    cap = cv2.VideoCapture(input_path)
+def _extract_frames_opencv(input_path: Path, frame_count: int, target_size=(48, 27)):
+    cap = cv2.VideoCapture(str(input_path))
     frames = []
 
     with tqdm.tqdm(total=frame_count, desc="Extracting frames") as pbar:
@@ -213,7 +214,7 @@ def transnet_scenes(
     return scenes_list
 
 
-def get_keyframe_transnet(input_file: str, frame_count: int) -> list[int]:
+def get_keyframe_transnet(input_file: Path, frame_count: int) -> list[int]:
     log.warning_log("Transnetv2 is an experimental method")
     opencv_frame = _extract_frames_opencv(input_file, frame_count)
     if model_path is None:

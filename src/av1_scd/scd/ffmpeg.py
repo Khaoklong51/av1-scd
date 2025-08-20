@@ -4,12 +4,13 @@ import re
 import tqdm
 import threading
 from av1_scd import predefined, log, util, option
+from pathlib import Path
 
 
 threshold = option.treshold
 
 
-def get_keyframe_ffmpeg_scene(input_file: str) -> list:
+def get_keyframe_ffmpeg_scene(input_file: Path) -> list:
     local_threshold = threshold
     if local_threshold == -2:
         local_threshold = predefined.THRESHOLD["ffmpeg-scene"]
@@ -20,6 +21,7 @@ def get_keyframe_ffmpeg_scene(input_file: str) -> list:
                 rf"select=gt(scene\,{local_threshold}),showinfo",
                 "-an", "-f", "null", "-"] # fmt: skip
 
+    command1 = [str(i) for i in command1]
     p1 = subprocess.run(command1, stderr=subprocess.PIPE, text=True)
     line = []
 
@@ -33,7 +35,7 @@ def get_keyframe_ffmpeg_scene(input_file: str) -> list:
     return line
 
 
-def get_keyframe_ffmpeg_scdet(input_file: str, frame_count: int) -> list:
+def get_keyframe_ffmpeg_scdet(input_file: Path, frame_count: int) -> list:
     local_threshold = threshold
     if local_threshold == -2:
         local_threshold = predefined.THRESHOLD["ffmpeg-scdet"]
@@ -44,6 +46,7 @@ def get_keyframe_ffmpeg_scdet(input_file: str, frame_count: int) -> list:
                 f"scdet=t={local_threshold}",
                 "-an", "-f", "null", "-"] # fmt: skip
 
+    command1 = [str(i) for i in command1]
     ffmpeg_data = []
     with tqdm.tqdm(total=frame_count, desc="Processing frames") as pbar:
         p1 = subprocess.Popen(

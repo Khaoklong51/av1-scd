@@ -1,12 +1,14 @@
 import pymediainfo as pym
 from av1_scd import log, predefined, option
 import typing as typ
+from pathlib import Path
+
 
 vid_data = dict[str, typ.Any]
 FF_PIXEL = predefined.FF_PIXFMT
 
 
-def get_pymediainfo_data(input_path: str) -> vid_data:
+def get_pymediainfo_data(input_path: Path) -> vid_data:
     user_track = option.user_track
     media_info = pym.MediaInfo.parse(input_path, parse_speed=1)
     track_list: list[pym.Track] = media_info.video_tracks
@@ -17,9 +19,10 @@ def get_pymediainfo_data(input_path: str) -> vid_data:
             "only {num_tracks} video tracks available."
         )
 
-    log.debug_log(f"Track data {str(track_list[user_track].to_data())}")
+    user_sl_track = track_list[user_track].to_data()
+    log.debug_log(f"Track data {user_sl_track}")
     # already return dict data of selected track
-    return track_list[user_track].to_data()
+    return user_sl_track
 
 
 def get_ffmpeg_pixfmt(track_data: vid_data) -> str:
