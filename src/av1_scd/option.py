@@ -119,7 +119,10 @@ parser3.add_argument(
 args = parser.parse_args()
 
 input_file: Path = Path(args.input)
-output_file: Path = Path(args.output)
+output_file1: str | None = args.output
+output_file = Path("")
+if output_file1 is not None:
+    output_file = Path(output_file1)
 scd_method: str = args.scd_method
 min_scene_len: int = args.min_scene_len
 max_scene_len: int = args.max_scene_len
@@ -132,5 +135,8 @@ enc_format: str = args.format
 is_print: bool = args.print
 log_level: str = args.log_level
 treshold: float = args.treshold
-transnet_model_path: Path = Path(args.transnet_model)
+transnet_model_path1 = args.transnet_model
+transnet_model_path = Path("")
+if transnet_model_path1 is not None:
+    transnet_model_path = Path(transnet_model_path1)
 vsxvid_height: int | None = args.vsxvid_height
