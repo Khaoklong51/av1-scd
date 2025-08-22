@@ -1,6 +1,6 @@
 import shutil
 import subprocess
-from av1_scd import option, util
+from av1_scd import option, util, log
 import json
 import tqdm
 import threading
@@ -9,12 +9,18 @@ from pathlib import Path
 
 min_kf_dist = option.min_scene_len
 max_kf_dist = option.max_scene_len
+ffmpeg_filter = option.ffmpeg_filter
 
 
 def get_keyframe_avscenechange(input_path: Path, pix_fmt: str, frame_count: int) -> list:
-    params1 = [shutil.which('ffmpeg'), '-progress', 'pipe:2', '-loglevel', 'error' ,
-               '-hide_banner', '-i', input_path, '-map', '0:v:0', '-pix_fmt', pix_fmt,
-               '-f', 'yuv4mpegpipe', '-strict', '-1', '-']  # fmt: skip
+    params1 = [shutil.which('ffmpeg'), '-progress', 'pipe:2',
+               '-loglevel', 'error', '-hide_banner', '-i', input_path]  # fmt: skip
+
+    if ffmpeg_filter is not None:
+        params1 += ['-filter:v:0', ffmpeg_filter] # fmt: skip
+
+    params1 += ['-map', '0:v:0', '-pix_fmt', pix_fmt,
+               '-f', 'yuv4mpegpipe', '-strict', '-1', '-'] # fmt: skip
 
     params2 = [shutil.which('av-scenechange'), '-',
               '--speed', '0', '--min-scenecut', min_kf_dist,
@@ -22,6 +28,9 @@ def get_keyframe_avscenechange(input_path: Path, pix_fmt: str, frame_count: int)
 
     params1 = [str(i) for i in params1]
     params2 = [str(i) for i in params2]
+
+    log.debug_log(f"FFmpeg command {' '.join(params1)}")
+    log.debug_log(f"av-scenechange commnad {' '.join(params2)}")
 
     with tqdm.tqdm(total=frame_count, desc="Processing frames") as pbar:
         p1 = subprocess.Popen(params1, stdout=subprocess.PIPE,

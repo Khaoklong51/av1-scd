@@ -115,6 +115,14 @@ parser3 = parser.add_argument_group("transnet", "Extra option for transnetv2 mod
 parser3.add_argument(
     "--transnet-model", type=str, default=None, help="Path to onnx transet model"
 )
+parser4 = parser.add_argument_group("av-scenechnage", "Extraoption for av-scenechange")
+parser4.add_argument(
+    "--ffmpeg-filter",
+    type=str,
+    default=None,
+    help="Extra option to go in to -filter:v:0 in ffmpeg for piping. "
+    "Useful for downscaling video",
+)
 
 args = parser.parse_args()
 
@@ -140,3 +148,4 @@ transnet_model_path = Path("")
 if transnet_model_path1 is not None:
     transnet_model_path = Path(transnet_model_path1)
 vsxvid_height: int | None = args.vsxvid_height
+ffmpeg_filter: str | None = args.ffmpeg_filter
