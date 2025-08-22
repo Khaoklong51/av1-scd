@@ -87,9 +87,9 @@ usage: av1-scd [-h] -i INPUT [-o OUTPUT] [--min-scene-len MIN_SCENE_LEN] [--max-
                [--scd-method {pyscene,vsxvid,av-scenechange,ffmpeg-scene,ffmpeg-scdet,transnetv2}] [--track TRACK] -f {x264,x265,svt-av1,av1an,av1an-git,ffmpeg}
                [--print] [--log-level {debug,info,warning,error}] [--treshold TRESHOLD] [--pysc-decode {opencv,pyav,moviepy}]
                [--pysc-method {adaptive,content,threshold,hash,histogram}] [--pysc-downscale {auto,<class 'int'>}] [--vs-source {bestsource,ffms2,lsmash}]
-               [--vsxvid-height VSXVID_HEIGHT] [--transnet-model TRANSNET_MODEL]
+               [--vsxvid-height VSXVID_HEIGHT] [--transnet-model TRANSNET_MODEL] [--ffmpeg-filter FFMPEG_FILTER]
 
-py-video-encode v1.0.0
+py-video-encode v2.0.0
 
 options:
   -h, --help            show this help message and exit
@@ -132,4 +132,10 @@ transnet:
 
   --transnet-model TRANSNET_MODEL
                         Path to onnx transet model
+
+av-scenechnage:
+  Extraoption for av-scenechange
+
+  --ffmpeg-filter FFMPEG_FILTER
+                        Extra option to go in to -filter:v:0 in ffmpeg for piping. Useful for downscaling video
 ```
