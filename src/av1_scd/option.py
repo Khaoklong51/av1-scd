@@ -64,6 +64,12 @@ parser.add_argument(
 parser.add_argument(
     "--treshold", type=float, default=-2, help="treshold for scene change"
 )
+parser.add_argument(
+    "--version",
+    action="version",
+    version=f"%(prog)s {predefined.VERSION}",
+    help="print version",
+)
 # parser.add_argument("--hw-decode", action="store_true", default=False,
 # help="use hw acceleration to decode video")
 
@@ -108,29 +114,22 @@ parser2.add_argument(
 parser2.add_argument(
     "--vsxvid-height",
     type=int,
-    default=None,
     help="Height for vsxvid processing. Default is video height.",
 )
 parser3 = parser.add_argument_group("transnet", "Extra option for transnetv2 model")
-parser3.add_argument(
-    "--transnet-model", type=str, default=None, help="Path to onnx transet model"
-)
+parser3.add_argument("--transnet-model", type=str, help="Path to onnx transet model")
 parser4 = parser.add_argument_group("av-scenechnage", "Extraoption for av-scenechange")
 parser4.add_argument(
     "--ffmpeg-filter",
     type=str,
-    default=None,
     help="Extra option to go in to -filter:v:0 in ffmpeg for piping. "
     "Useful for downscaling video",
 )
 
 args = parser.parse_args()
 
-input_file: Path = Path(args.input)
-output_file1: str | None = args.output
-output_file = Path("")
-if output_file1 is not None:
-    output_file = Path(output_file1)
+input_file = Path(args.input)
+output_file = Path(args.output) if args.output else None
 scd_method: str = args.scd_method
 min_scene_len: int = args.min_scene_len
 max_scene_len: int = args.max_scene_len
@@ -143,9 +142,6 @@ enc_format: str = args.format
 is_print: bool = args.print
 log_level: str = args.log_level
 treshold: float = args.treshold
-transnet_model_path1 = args.transnet_model
-transnet_model_path = Path("")
-if transnet_model_path1 is not None:
-    transnet_model_path = Path(transnet_model_path1)
-vsxvid_height: int | None = args.vsxvid_height
-ffmpeg_filter: str | None = args.ffmpeg_filter
+transnet_model_path = Path(args.transnet_model) if args.transnet_model else None
+vsxvid_height: int = args.vsxvid_height
+ffmpeg_filter: str = args.ffmpeg_filter

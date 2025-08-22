@@ -131,11 +131,12 @@ def main():
     elif enc_format == ALL_CFG_OPT[5]:  # ffmpeg
         enc_data = cfg.get_scene_ffmpeg(keyframe_list1)
 
-    log.debug_log(f"Create folder at {output_file.parent}")
-    output_file.parent.mkdir(parents=True, exist_ok=True)
-    log.debug_log(f"Write file to {output_file}")
-    with open(output_file, mode="w", encoding="utf-8") as f:
-        f.write(enc_data)
+    if output_file is not None:
+        log.debug_log(f"Create folder at {output_file.parent}")
+        output_file.parent.mkdir(parents=True, exist_ok=True)
+        log.debug_log(f"Write file to {output_file}")
+        with open(output_file, mode="w", encoding="utf-8") as f:
+            f.write(enc_data)
 
     if is_print:
         print(enc_data)
