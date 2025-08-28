@@ -9,10 +9,8 @@ def process_keyframe(keyframes: list[int], frame_count: int) -> list[int]:
 
     if keyframes_a[0] != 0:
         keyframes_a.insert(0, 0)
-    if keyframes_a[-1] != frame_count:
-        keyframes_a.append(frame_count)
 
-    if keyframes_a[-1] - max_kf_dist > keyframes_a[-2]:
+    if frame_count - max_kf_dist > keyframes_a[-1]:
         log.warning_log("Possible frame mismatch. This may cause by broken decoding")
 
     keyframes_cut = [keyframes_a[0]]
@@ -34,5 +32,8 @@ def process_keyframe(keyframes: list[int], frame_count: int) -> list[int]:
         # Add this keyframe if far enough from previous
         if (curr - keyframes_cut[-1]) >= min_kf_dist:
             keyframes_cut.append(curr)
+
+    if keyframes_cut[-1] != frame_count:
+        keyframes_cut.append(frame_count)
 
     return sorted(set(keyframes_cut))
