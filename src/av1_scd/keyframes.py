@@ -1,4 +1,4 @@
-from av1_scd import option
+from av1_scd import option, log
 
 
 def process_keyframe(keyframes: list[int], frame_count: int) -> list[int]:
@@ -11,6 +11,9 @@ def process_keyframe(keyframes: list[int], frame_count: int) -> list[int]:
         keyframes_a.insert(0, 0)
     if keyframes_a[-1] != frame_count:
         keyframes_a.append(frame_count)
+
+    if keyframes_a[-1] - max_kf_dist > keyframes_a[-2]:
+        log.warning_log("Possible frame mismatch. This may cause by broken decoding")
 
     keyframes_cut = [keyframes_a[0]]
 
