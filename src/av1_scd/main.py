@@ -114,7 +114,7 @@ def main():
         keyframe_list1 = [int(i) for i in keyframe_list]
 
     log.debug_log("")  # empty line to split between raw keyframe and process keyframe
-    log.debug_log(f"Keyframe Process list {str(keyframe_list1)}")
+    log.debug_log(f"Keyframe Process list {keyframe_list1}")
 
     log.info_log(f"Keyframes Config {enc_format.lower()}")
     enc_data = ""
