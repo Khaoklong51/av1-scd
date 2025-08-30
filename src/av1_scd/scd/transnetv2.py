@@ -242,11 +242,11 @@ def transnet_scenes(
 
 def get_keyframe_transnet(input_file: Path, frame_count: int) -> list[int]:
     log.warning_log("Transnetv2 is an experimental method")
-    opencv_frame = _extract_frames_opencv(input_file, frame_count)
     if model_path is None:
         log.error_log(
             "Transnet model not provided. provide model using --transnet-model option"
         )
+    opencv_frame = _extract_frames_opencv(input_file, frame_count)
     scene_list = transnet_scenes(opencv_frame, frame_count)
     log.debug_log(f"Transnet Raw keyframe {scene_list}")
 
