@@ -68,7 +68,7 @@ GPU_PROVIDER = [
 
 # reserve for future use incase other method add
 SKIP_PROCESS_KEYFRAME = [
-    ALL_SCD_METHOD[5],  # transnetv2
+    ALL_SCD_METHOD[2],  # av-scenechange
 ]
 
 USE_FFMPEG_METHOD = [
