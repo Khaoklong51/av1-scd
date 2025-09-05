@@ -111,7 +111,7 @@ def main():
         # If skipping, just use the raw keyframe list as is
         # doing this to make sure list is int
         # because we skip process_keyframe
-        keyframe_list1 = [int(i) for i in keyframe_list]
+        keyframe_list1 = sorted([int(i) for i in keyframe_list])
 
     log.debug_log("")  # empty line to split between raw keyframe and process keyframe
     log.debug_log(f"Keyframe Process list {keyframe_list1}")
