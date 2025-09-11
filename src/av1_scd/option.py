@@ -117,7 +117,9 @@ parser2.add_argument(
     help="Height for vsxvid processing. Default is video height.",
 )
 parser3 = parser.add_argument_group("transnet", "Extra option for transnetv2 model")
-parser3.add_argument("--transnet-model", type=str, help="Path to onnx transet model")
+parser3.add_argument(
+    "--transnet-model", type=str, help="Path to onnx transet model", default=None
+)
 parser4 = parser.add_argument_group("av-scenechnage", "Extraoption for av-scenechange")
 parser4.add_argument(
     "--ffmpeg-filter",
@@ -142,6 +144,6 @@ enc_format: str = args.format
 is_print: bool = args.print
 log_level: str = args.log_level
 treshold: float = args.treshold
-transnet_model_path = Path(args.transnet_model) if args.transnet_model else None
+transnet_model_path: str | None = args.transnet_model
 vsxvid_height: int = args.vsxvid_height
 ffmpeg_filter: str = args.ffmpeg_filter
