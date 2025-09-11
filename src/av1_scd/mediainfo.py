@@ -53,7 +53,7 @@ def get_frame_count(track_data: vid_data) -> int:
 def get_scene_len(track_data: vid_data) -> tuple[int, int]:
     frame_rate = get_framerate(track_data)
     min_len = round(frame_rate)
-    max_len = round(frame_rate * 10)
+    max_len = round(frame_rate * 5)
     return min_len, max_len
 
 

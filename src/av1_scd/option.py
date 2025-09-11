@@ -25,7 +25,7 @@ parser.add_argument(
     "--max-scene-len",
     type=int,
     default=-2,
-    help="max lenght for scene detection. Default is 10 sec of viddeo",
+    help="max lenght for scene detection. Default is 5 sec of viddeo",
 )
 parser.add_argument(
     "--scd-method",

@@ -109,7 +109,7 @@ options:
   --min-scene-len MIN_SCENE_LEN
                         min lenght for scene detection. Default is 1 sec of video
   --max-scene-len MAX_SCENE_LEN
-                        max lenght for scene detection. Default is 10 sec of viddeo
+                        max lenght for scene detection. Default is 5 sec of viddeo
   --scd-method {pyscene,vsxvid,av-scenechange,ffmpeg-scene,ffmpeg-scdet,transnetv2}
                         scene detection method. Default is pyscene
   --track TRACK         Track number for video (Index start at 1). Default is 1
