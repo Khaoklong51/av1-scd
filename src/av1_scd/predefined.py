@@ -66,10 +66,8 @@ GPU_PROVIDER = [
     "ROCMExecutionProvider",
 ]
 
-# reserve for future use incase other method add
-SKIP_PROCESS_KEYFRAME = [
-    ALL_SCD_METHOD[2],  # av-scenechange
-]
+# reserve for future use in case other method add
+SKIP_PROCESS_KEYFRAME = []
 
 USE_FFMPEG_METHOD = [
     ALL_SCD_METHOD[2],  # av-scenechange
