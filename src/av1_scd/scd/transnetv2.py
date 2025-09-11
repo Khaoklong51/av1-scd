@@ -28,6 +28,7 @@ def _extract_frames_opencv(input_path: Path, frame_count: int, target_size=(48, 
             pbar.update(1)
 
         pbar.n = frame_count
+        pbar.refresh()
         pbar.close()
 
     cap.release()
