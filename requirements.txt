@@ -1,3 +1,4 @@
+# this is mininal dependencies for runninh program
 colorama
 numpy
 opencv-python

@@ -28,7 +28,7 @@ Command line tool to quickly detect scene change and generate config file for en
 
 ## Dependencies
 
-This is not require dependencies for a full list for python packages checkout pyproject.toml\
+**This is not require dependencies** for a full list of dependencies checkout pyproject.toml\
 if any dependencies is missing it will error out anyway.
 
 - [Pymediainfo](https://github.com/sbraz/pymediainfo)
@@ -72,9 +72,20 @@ The report keyframe may differ slightly (usually 1,2 or 3 frames) depend on prog
    git clone https://github.com/Khaoklong51/av1-scd.git
    cd av1-scd
    python -m build --wheel # or 'uv build' if you have uv.
-   pipx install dist/*.whl # install minimal dependencies
+   pipx install dist/*.whl # install with minimal dependencies
    pipx install dist/*.whl[vsxvid,transnet] # install with optional vsxvid and transnet dependencies. All option are [vsxvid, transnet, pyscene]
-    ```
+   ```
+
+2. Wheel files
+
+Wheel file can be download at [release](https://github.com/Khaoklong51/av1-scd/releases) section\
+\
+then install with pipx or your prefered package manager
+
+```bash
+pipx install av1-scd.whl # install with minimal dependencies
+pipx install av1-scd.whl # install with optional vsxvid and transnet dependencies. All option are [vsxvid, transnet, pyscene]
+```
 
 ## Usage
 
@@ -85,7 +96,7 @@ The report keyframe may differ slightly (usually 1,2 or 3 frames) depend on prog
 ```text
 usage: av1-scd [-h] -i INPUT [-o OUTPUT] [--min-scene-len MIN_SCENE_LEN] [--max-scene-len MAX_SCENE_LEN]
                [--scd-method {pyscene,vsxvid,av-scenechange,ffmpeg-scene,ffmpeg-scdet,transnetv2}] [--track TRACK] -f {x264,x265,svt-av1,av1an,av1an-git,ffmpeg}
-               [--print] [--log-level {debug,info,warning,error}] [--treshold TRESHOLD] [--pysc-decode {opencv,pyav,moviepy}]
+               [--print] [--log-level {debug,info,warning,error}] [--treshold TRESHOLD] [--version] [--pysc-decode {opencv,pyav,moviepy}]
                [--pysc-method {adaptive,content,threshold,hash,histogram}] [--pysc-downscale {auto,<class 'int'>}] [--vs-source {bestsource,ffms2,lsmash}]
                [--vsxvid-height VSXVID_HEIGHT] [--transnet-model TRANSNET_MODEL] [--ffmpeg-filter FFMPEG_FILTER]
 
@@ -108,6 +119,7 @@ options:
   --log-level {debug,info,warning,error}
                         log level output to console. Default is info.
   --treshold TRESHOLD   treshold for scene change
+  --version             print version
 
 pyscene:
   extra option for pyscene scene detection method
@@ -137,5 +149,5 @@ av-scenechnage:
   Extraoption for av-scenechange
 
   --ffmpeg-filter FFMPEG_FILTER
-                        Extra option to go in to -filter:v:0 in ffmpeg for piping. Useful for downscaling video
+                        Extra option to go in to -filter:v in ffmpeg for piping. Useful for downscaling video
 ```

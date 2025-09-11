@@ -124,7 +124,7 @@ parser4 = parser.add_argument_group("av-scenechnage", "Extraoption for av-scenec
 parser4.add_argument(
     "--ffmpeg-filter",
     type=str,
-    help="Extra option to go in to -filter:v:0 in ffmpeg for piping. "
+    help="Extra option to go in to -filter:v in ffmpeg for piping. "
     "Useful for downscaling video",
 )
 
