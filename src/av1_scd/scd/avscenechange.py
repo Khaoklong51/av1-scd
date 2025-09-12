@@ -58,6 +58,11 @@ def get_keyframe_avscenechange(input_path: Path, pix_fmt: str, frame_count: int)
         pbar.close()
 
     scene_list = _process_scene_data(stdout_data)
+
+    last_scene = sorted(scene_list)[-1]
+    if frame_count - max_kf_dist > last_scene or last_scene != frame_count:
+        log.warning_log("Possible frame mismatch. This may cause by broken decoding")
+
     return scene_list
 
 
