@@ -3,18 +3,9 @@ from av1_scd import predefined
 from pathlib import Path
 
 
-ALL_VAPOURSYNTH_DECODE = predefined.ALL_VS_SOURCE
-ALL_SCD_METHOD = predefined.ALL_SCD_METHOD
-ALL_CFG_OPT = predefined.ALL_CFG_OPT
-ALL_LOG_LEVEL = predefined.ALL_LOG_LEVEL
-ALL_PYSCENE_DECODE = predefined.ALL_PYSC_DECODE
-ALL_PYSCENE_METHOD = predefined.ALL_PYSC_METHOD
-PYSC_DOWNSCALE = predefined.PYSC_DOWNSCALE
-
-
 parser = argparse.ArgumentParser(description=f"py-video-encode {predefined.VERSION}")
-parser.add_argument("-i", "--input", type=str, required=True, help="Path to input file.")
-parser.add_argument("-o", "--output", type=str, help="Path to output file.")
+parser.add_argument("-i", "--input", type=Path, required=True, help="Path to input file.")
+parser.add_argument("-o", "--output", type=Path, help="Path to output file.")
 parser.add_argument(
     "--min-scene-len",
     type=int,
@@ -30,9 +21,9 @@ parser.add_argument(
 parser.add_argument(
     "--scd-method",
     type=str,
-    choices=ALL_SCD_METHOD,
+    choices=predefined.ALL_SCD_METHOD,
     help="scene detection method. Default is pyscene",
-    default=ALL_SCD_METHOD[0],
+    default=predefined.ALL_SCD_METHOD[0],
 )
 parser.add_argument(
     "--track",
@@ -45,7 +36,7 @@ parser.add_argument(
     "--format",
     required=True,
     type=str,
-    choices=ALL_CFG_OPT,
+    choices=predefined.ALL_CFG_OPT,
     help="format of keyframe to feed program.",
 )
 parser.add_argument(
@@ -57,8 +48,8 @@ parser.add_argument(
 parser.add_argument(
     "--log-level",
     type=str,
-    choices=ALL_LOG_LEVEL,
-    default=ALL_LOG_LEVEL[1],
+    choices=predefined.ALL_LOG_LEVEL,
+    default=predefined.ALL_LOG_LEVEL[1],
     help="log level output to console. Default is info.",
 )
 parser.add_argument(
@@ -78,23 +69,23 @@ parser1 = parser.add_argument_group(
 )
 parser1.add_argument(
     "--pysc-decode",
-    choices=ALL_PYSCENE_DECODE,
+    choices=predefined.ALL_PYSC_DECODE,
     type=str,
-    default=ALL_PYSCENE_DECODE[0],
+    default=predefined.ALL_PYSC_DECODE[0],
     help="Decode method for pyscene detect. Default is opencv.",
 )
 parser1.add_argument(
     "--pysc-method",
-    choices=ALL_PYSCENE_METHOD,
+    choices=predefined.ALL_PYSC_METHOD,
     type=str,
-    default=ALL_PYSCENE_METHOD[0],
+    default=predefined.ALL_PYSC_METHOD[0],
     help="Scene detect method for pyscene detect. Default is adaptive.",
 )
 parser1.add_argument(
     "--pysc-downscale",
-    choices=PYSC_DOWNSCALE,
+    choices=predefined.PYSC_DOWNSCALE,
     type=str or int,
-    default=PYSC_DOWNSCALE[0],
+    default=predefined.PYSC_DOWNSCALE[0],
     help="Downscale factor for pyscene detect method, "
     "can be either auto or number(int). "
     "To disable set this to 1. Default is auto.",
@@ -107,8 +98,8 @@ parser2 = parser.add_argument_group(
 parser2.add_argument(
     "--vs-source",
     type=str,
-    choices=ALL_VAPOURSYNTH_DECODE,
-    default=ALL_VAPOURSYNTH_DECODE[1],
+    choices=predefined.ALL_VS_SOURCE,
+    default=predefined.ALL_VS_SOURCE[1],
     help="Source method for vapoursynth. Default is ffms2.",
 )
 parser2.add_argument(
@@ -143,7 +134,7 @@ user_track: int = args.track - 1
 enc_format: str = args.format
 is_print: bool = args.print
 log_level: str = args.log_level
-treshold: float = args.treshold
+threshold: float = args.treshold
 transnet_model_path: str | None = args.transnet_model
 vsxvid_height: int = args.vsxvid_height
 ffmpeg_filter: str = args.ffmpeg_filter

@@ -2,21 +2,18 @@ import colorama
 import termcolor as tcolor
 import logging
 import sys
-from av1_scd import option, predefined
-
-
-log_level = option.log_level
-LOG_LEVEL = predefined.ALL_LOG_LEVEL
+from av1_scd import predefined
+from av1_scd import option as opt
 
 
 def check_log_level() -> int | None:
-    if log_level == LOG_LEVEL[0]:  # debug
+    if opt.log_level == predefined.ALL_LOG_LEVEL[0]:  # debug
         return logging.DEBUG
-    elif log_level == LOG_LEVEL[1]:  # info
+    elif opt.log_level == predefined.ALL_LOG_LEVEL[1]:  # info
         return logging.INFO
-    elif log_level == LOG_LEVEL[2]:  # warning
+    elif opt.log_level == predefined.ALL_LOG_LEVEL[2]:  # warning
         return logging.WARNING
-    elif log_level == LOG_LEVEL[3]:  # error
+    elif opt.log_level == predefined.ALL_LOG_LEVEL[3]:  # error
         return logging.ERROR
 
 

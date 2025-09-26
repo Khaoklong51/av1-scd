@@ -3,19 +3,19 @@ import subprocess
 import re
 import tqdm
 import threading
-from av1_scd import predefined, log, util, option
+from av1_scd import predefined, log, util
 from pathlib import Path
-
-
-threshold = option.treshold
+from av1_scd import option as opt
 
 
 def get_keyframe_ffmpeg_scene(input_file: Path) -> list:
-    local_threshold = threshold
+    local_threshold = opt.threshold
     if local_threshold == -2:
         local_threshold = predefined.THRESHOLD["ffmpeg-scene"]
     log.info_log(f"Select treshold {local_threshold}")
-    log.warning_log(f"{option.ALL_SCD_METHOD[3]} method does not support progress bar")
+    log.warning_log(
+        f"{predefined.ALL_SCD_METHOD[3]} method does not support progress bar"
+    )
     command1 = [shutil.which("ffmpeg"), "-hide_banner",
                 "-i", input_file, "-filter:v",
                 rf"select=gt(scene\,{local_threshold}),showinfo",
@@ -36,7 +36,7 @@ def get_keyframe_ffmpeg_scene(input_file: Path) -> list:
 
 
 def get_keyframe_ffmpeg_scdet(input_file: Path, frame_count: int) -> list:
-    local_threshold = threshold
+    local_threshold = opt.threshold
     if local_threshold == -2:
         local_threshold = predefined.THRESHOLD["ffmpeg-scdet"]
 

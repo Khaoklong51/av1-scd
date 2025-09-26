@@ -1,9 +1,10 @@
-from av1_scd import option, log
+from av1_scd import log
+from av1_scd import option as opt
 
 
 def process_keyframe(keyframes: list[int], frame_count: int) -> list[int]:
-    min_kf_dist = option.min_scene_len
-    max_kf_dist = option.max_scene_len
+    min_kf_dist = opt.min_scene_len
+    max_kf_dist = opt.max_scene_len
 
     keyframes_a = sorted(int(fr) for fr in keyframes)
 

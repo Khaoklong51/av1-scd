@@ -8,7 +8,7 @@ pysc_decode = option.pysc_decode
 pysc_method = option.pysc_method
 ALL_PYSC_METHOD = predefined.ALL_PYSC_METHOD
 pysc_down_factor = option.pysc_down_factor
-threshold = option.treshold
+threshold = option.threshold
 
 
 def get_keyframe_pyscene(input_path: Path) -> list:

@@ -1,30 +1,26 @@
 import shutil
 import subprocess
-from av1_scd import option, util, log
+from av1_scd import util, log
+from av1_scd import option as opt
 import json
 import tqdm
 import threading
 from pathlib import Path
 
 
-min_kf_dist = option.min_scene_len
-max_kf_dist = option.max_scene_len
-ffmpeg_filter = option.ffmpeg_filter
-
-
 def get_keyframe_avscenechange(input_path: Path, pix_fmt: str, frame_count: int) -> list:
     params1 = [shutil.which('ffmpeg'), '-progress', 'pipe:2',
                '-loglevel', 'error', '-hide_banner', '-i', input_path]  # fmt: skip
 
-    if ffmpeg_filter is not None:
-        params1 += ['-filter:v:0', ffmpeg_filter] # fmt: skip
+    if opt.ffmpeg_filter is not None:
+        params1 += ['-filter:v:0', opt.ffmpeg_filter] # fmt: skip
 
     params1 += ['-map', '0:v:0', '-pix_fmt', pix_fmt,
                '-f', 'yuv4mpegpipe', '-strict', '-1', '-'] # fmt: skip
 
     params2 = [shutil.which('av-scenechange'), '-',
-              '--speed', '0', '--min-scenecut', min_kf_dist,
-              '--max-scenecut', max_kf_dist]  # fmt: skip
+              '--speed', '0', '--min-scenecut', opt.min_scene_len,
+              '--max-scenecut', opt.max_scene_len]  # fmt: skip
 
     params1 = [str(i) for i in params1]
     params2 = [str(i) for i in params2]
@@ -60,7 +56,7 @@ def get_keyframe_avscenechange(input_path: Path, pix_fmt: str, frame_count: int)
     scene_list = _process_scene_data(stdout_data)
 
     last_scene = sorted(scene_list)[-1]
-    if frame_count - max_kf_dist > last_scene or last_scene != frame_count:
+    if frame_count - opt.max_scene_len > last_scene or last_scene != frame_count:
         log.warning_log("Possible frame mismatch. This may cause by broken decoding")
 
     return scene_list

@@ -7,7 +7,7 @@ from pathlib import Path
 
 min_scene_len = option.min_scene_len
 max_scene_len = option.max_scene_len
-threshold = option.treshold
+threshold = option.threshold
 model_path = option.transnet_model_path
 gpu_providers = predefined.GPU_PROVIDER
 
