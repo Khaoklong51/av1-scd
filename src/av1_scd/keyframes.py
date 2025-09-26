@@ -1,8 +1,9 @@
 from av1_scd import log
 from av1_scd import option as opt
+import typing as typ
 
 
-def process_keyframe(keyframes: list[int], frame_count: int) -> list[int]:
+def process_keyframe(keyframes: list[typ.Any], frame_count: int) -> list[int]:
     min_kf_dist = opt.min_scene_len
     max_kf_dist = opt.max_scene_len
 
@@ -11,8 +12,7 @@ def process_keyframe(keyframes: list[int], frame_count: int) -> list[int]:
     if keyframes_a[0] != 0:
         keyframes_a.insert(0, 0)
 
-    if frame_count - max_kf_dist > keyframes_a[-1]:
-        log.warning_log("Possible frame mismatch. This may cause by broken decoding")
+    warn_vid_frame(frame_count, keyframes_a)
 
     keyframes_cut = [keyframes_a[0]]
 
@@ -38,3 +38,9 @@ def process_keyframe(keyframes: list[int], frame_count: int) -> list[int]:
         keyframes_cut.append(frame_count)
 
     return sorted(set(keyframes_cut))
+
+
+def warn_vid_frame(frame_count: int, keyframes: list[int]):
+    """Warn if last keyframe not match frame of video"""
+    if frame_count - opt.max_scene_len > keyframes[-1]:
+        log.warning_log("Possible frame mismatch. This may cause by broken decoding")

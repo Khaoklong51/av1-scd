@@ -106,6 +106,7 @@ def main():
         # doing this to make sure list is int
         # because we skip process_keyframe
         keyframe_list1 = sorted([int(i) for i in keyframe_list])
+        keyframes.warn_vid_frame(frame_count, keyframe_list1)
 
     log.debug_log("")  # empty line to split between raw keyframe and process keyframe
     log.debug_log(f"Keyframe Process list {keyframe_list1}")
