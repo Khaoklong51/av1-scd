@@ -1,4 +1,4 @@
-VERSION = "v2.0.0"
+VERSION = "v3.0.0"
 
 ALL_SCD_METHOD = [
     "pyscene",
