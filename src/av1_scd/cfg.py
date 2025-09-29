@@ -97,3 +97,13 @@ def get_scene_ffmpeg(scene_list: list[int]) -> str:
         cfg_data += f"eq(n,{i})+"
 
     return cfg_data.removesuffix("+")
+
+
+def get_scene_xav(scene_list: list[int]):
+
+    scene_list.pop(-1)
+    cfg_data = ""
+    for fr in scene_list:
+        cfg_data += f"{fr}\n"
+
+    return cfg_data

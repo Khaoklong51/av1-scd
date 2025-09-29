@@ -17,6 +17,7 @@ Command line tool to quickly detect scene change and generate config file for en
 - [SvtAv1EncApp](https://gitlab.com/AOMediaCodec/SVT-AV1)
 - [ffmpeg](https://www.ffmpeg.org/)
 - [av1an](https://github.com/rust-av/Av1an)
+- [xav](https://github.com/emrakyz/xav)
 
 ## Support scene detection method
 
@@ -95,7 +96,7 @@ pipx install av1-scd.whl # install with optional vsxvid and transnet dependencie
 
 ```text
 usage: av1-scd [-h] -i INPUT [-o OUTPUT] [--min-scene-len MIN_SCENE_LEN] [--max-scene-len MAX_SCENE_LEN]
-               [--scd-method {pyscene,vsxvid,av-scenechange,ffmpeg-scene,ffmpeg-scdet,transnetv2}] [--track TRACK] -f {x264,x265,svt-av1,av1an,av1an-git,ffmpeg}
+               [--scd-method {pyscene,vsxvid,av-scenechange,ffmpeg-scene,ffmpeg-scdet,transnetv2}] [--track TRACK] -f {x264,x265,svt-av1,av1an,av1an-git,ffmpeg,xav}
                [--print] [--log-level {debug,info,warning,error}] [--treshold TRESHOLD] [--ignore-scene-len] [--version] [--pysc-decode {opencv,pyav,moviepy}]
                [--pysc-method {adaptive,content,threshold,hash,histogram}] [--pysc-downscale PYSC_DOWNSCALE] [--vs-source {bestsource,ffms2,lsmash}]
                [--vsxvid-height VSXVID_HEIGHT] [--transnet-model TRANSNET_MODEL] [--ffmpeg-filter FFMPEG_FILTER]
@@ -113,7 +114,7 @@ options:
   --scd-method {pyscene,vsxvid,av-scenechange,ffmpeg-scene,ffmpeg-scdet,transnetv2}
                         scene detection method. Default is pyscene
   --track TRACK         Track number for video (Index start at 1). Default is 1
-  -f, --format {x264,x265,svt-av1,av1an,av1an-git,ffmpeg}
+  -f, --format {x264,x265,svt-av1,av1an,av1an-git,ffmpeg,xav}
                         format of keyframe to feed program.
   --print               print data to stdout. this will disable the last helper massage.
   --log-level {debug,info,warning,error}

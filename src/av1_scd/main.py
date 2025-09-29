@@ -124,6 +124,8 @@ def main():
         enc_data = cfg.get_scene_av1an_git(keyframe_list1)
     elif opt.enc_format == predefined.ALL_CFG_OPT[5]:  # ffmpeg
         enc_data = cfg.get_scene_ffmpeg(keyframe_list1)
+    elif opt.enc_format == predefined.ALL_CFG_OPT[6]:  # xav
+        enc_data = cfg.get_scene_xav(keyframe_list1)
 
     if opt.output_file is not None:
         log.debug_log(f"Create folder at {opt.output_file.parent}")

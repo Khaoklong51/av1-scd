@@ -11,7 +11,7 @@ ALL_SCD_METHOD = [
 
 ALL_LOG_LEVEL = ["debug", "info", "warning", "error"]
 
-ALL_CFG_OPT = ["x264", "x265", "svt-av1", "av1an", "av1an-git", "ffmpeg"]
+ALL_CFG_OPT = ["x264", "x265", "svt-av1", "av1an", "av1an-git", "ffmpeg", "xav"]
 
 ALL_PYSC_DECODE = ["opencv", "pyav", "moviepy"]
 
