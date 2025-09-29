@@ -131,8 +131,8 @@ parser4.add_argument(
 
 args = parser.parse_args()
 
-input_file = Path(args.input)
-output_file = Path(args.output) if args.output else None
+input_file: Path = args.input
+output_file: Path | None = args.output if args.output else None
 scd_method: str = args.scd_method
 min_scene_len: int = args.min_scene_len
 max_scene_len: int = args.max_scene_len
