@@ -124,7 +124,7 @@ options:
   --version             print version
 
 pyscene:
-  extra option for pyscene scene detection method
+  Extra option for pyscene scene detection method
 
   --pysc-decode {opencv,pyav,moviepy}
                         Decode method for pyscene detect. Default is opencv.
@@ -134,7 +134,7 @@ pyscene:
                         Downscale factor for pyscene detect method, can be either auto or number(int). To disable set this to 1. Default is auto.
 
 vapoursynth:
-  extra option for vapousynth to perform vs-xvid scene detection method
+  Extra option for vapousynth to perform vs-xvid scene detection method
 
   --vs-source {bestsource,ffms2,lsmash}
                         Source method for vapoursynth. Default is ffms2.
@@ -148,7 +148,7 @@ transnet:
                         Path to onnx transet model
 
 av-scenechnage:
-  Extraoption for av-scenechange
+  Extra option for av-scenechange
 
   --ffmpeg-filter FFMPEG_FILTER
                         Extra option to go in to -filter:v in ffmpeg for piping. Useful for downscaling video

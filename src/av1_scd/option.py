@@ -71,7 +71,7 @@ parser.add_argument(
 # help="use hw acceleration to decode video")
 
 parser1 = parser.add_argument_group(
-    "pyscene", description="extra option for pyscene scene detection method"
+    "pyscene", description="Extra option for pyscene scene detection method"
 )
 parser1.add_argument(
     "--pysc-decode",
@@ -109,7 +109,7 @@ parser1.add_argument(
 
 parser2 = parser.add_argument_group(
     "vapoursynth",
-    description="extra option for vapousynth to perform vs-xvid scene detection method",
+    description="Extra option for vapousynth to perform vs-xvid scene detection method",
 )
 parser2.add_argument(
     "--vs-source",
@@ -127,7 +127,7 @@ parser3 = parser.add_argument_group("transnet", "Extra option for transnetv2 mod
 parser3.add_argument(
     "--transnet-model", type=str, help="Path to onnx transet model", default=None
 )
-parser4 = parser.add_argument_group("av-scenechnage", "Extraoption for av-scenechange")
+parser4 = parser.add_argument_group("av-scenechnage", "Extra option for av-scenechange")
 parser4.add_argument(
     "--ffmpeg-filter",
     type=str,
