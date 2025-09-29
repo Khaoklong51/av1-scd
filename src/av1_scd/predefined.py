@@ -17,8 +17,6 @@ ALL_PYSC_DECODE = ["opencv", "pyav", "moviepy"]
 
 ALL_PYSC_METHOD = ["adaptive", "content", "threshold", "hash", "histogram"]
 
-PYSC_DOWNSCALE = ["auto", int]
-
 ALL_VS_SOURCE = ["bestsource", "ffms2", "lsmash"]
 
 FF_PIXFMT = {

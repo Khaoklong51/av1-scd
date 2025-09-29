@@ -1,13 +1,10 @@
-from av1_scd import option, predefined
+from av1_scd import predefined
 import vapoursynth as vs
 import vstools
 from av1_scd import log
 from pathlib import Path
+from av1_scd import option as opt
 
-
-min_kf_dist = option.min_scene_len
-ALL_SOURCE_METHOD = predefined.ALL_VS_SOURCE
-vs_decode = option.vs_source
 core = vs.core
 
 
@@ -21,13 +18,13 @@ def _check_vs_source():
     if hasattr(core, "lsmas"):
         vs_source["lsmash"] = True
 
-    if vs_decode == ALL_SOURCE_METHOD[0] and not vs_source["bestsource"]:
+    if opt.vs_source == predefined.ALL_VS_SOURCE[0] and not vs_source["bestsource"]:
         log.error_log(
             "bestsource is unavailable. Install https://github.com/vapoursynth/bestsource"
         )
-    elif vs_decode == ALL_SOURCE_METHOD[1] and not vs_source["ffms2"]:
+    elif opt.vs_source == predefined.ALL_VS_SOURCE[1] and not vs_source["ffms2"]:
         log.error_log("ffms2 is unavailable. Install https://github.com/FFMS/ffms2")
-    elif vs_decode == ALL_SOURCE_METHOD[2] and not vs_source["lsmash"]:
+    elif opt.vs_source == predefined.ALL_VS_SOURCE[2] and not vs_source["lsmash"]:
         log.error_log(
             "lsmash is unavailable. Install https://github.com/HomeOfAviSynthPlusEvolution/L-SMASH-Works"
         )
@@ -35,14 +32,14 @@ def _check_vs_source():
 
 def _prepare_video(input_path: str):
     video = None
-    if vs_decode == ALL_SOURCE_METHOD[0]:  # bestsource
+    if opt.vs_source == predefined.ALL_VS_SOURCE[0]:  # bestsource
         video = core.bs.VideoSource(input_path)
-    elif vs_decode == ALL_SOURCE_METHOD[1]:  # ffms2
+    elif opt.vs_source == predefined.ALL_VS_SOURCE[1]:  # ffms2
         video = core.ffms2.Source(input_path)
-    elif vs_decode == ALL_SOURCE_METHOD[2]:  # lsmash
+    elif opt.vs_source == predefined.ALL_VS_SOURCE[2]:  # lsmash
         video = core.lsmas.LibavSMASHSource(input_path)
     if video is None:
-        log.error_log(f"Failed to use {vs_decode} source")
+        log.error_log(f"Failed to use {opt.vs_source} source")
 
     return video
 

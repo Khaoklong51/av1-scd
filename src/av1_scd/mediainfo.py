@@ -5,7 +5,6 @@ from pathlib import Path
 from av1_scd import option as opt
 
 vid_data = dict[str, typ.Any]
-FF_PIXEL = predefined.FF_PIXFMT
 
 
 def get_pymediainfo_data(input_path: Path) -> vid_data:
@@ -32,11 +31,11 @@ def get_ffmpeg_pixfmt(track_data: vid_data) -> str:
 
     pix_format = f"{color_space}{chroma_sub}P{bit_depth}"
 
-    ffmpeg_pix_format = FF_PIXEL[pix_format]
+    ffmpeg_pix_format = predefined.FF_PIXFMT[pix_format]
     if ffmpeg_pix_format is None:
         log.warning_log("Cannot get pixel format. fallback to yuv420p")
         ffmpeg_pix_format = "yuv420p"
-    log.debug_log(f"FFmpeg pixel format {str(FF_PIXEL[pix_format])}")
+    log.debug_log(f"FFmpeg pixel format {predefined.FF_PIXFMT[pix_format]}")
     return ffmpeg_pix_format
 
 

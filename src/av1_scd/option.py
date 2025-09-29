@@ -81,11 +81,21 @@ parser1.add_argument(
     default=predefined.ALL_PYSC_METHOD[0],
     help="Scene detect method for pyscene detect. Default is adaptive.",
 )
+
+
+def PYSC_DOWNSCALE(value):
+    if value == "auto":
+        return value
+    try:
+        return int(value)
+    except ValueError:
+        raise argparse.ArgumentTypeError("must be 'auto' or an integer")
+
+
 parser1.add_argument(
     "--pysc-downscale",
-    choices=predefined.PYSC_DOWNSCALE,
-    type=str or int,
-    default=predefined.PYSC_DOWNSCALE[0],
+    type=PYSC_DOWNSCALE,
+    default="auto",
     help="Downscale factor for pyscene detect method, "
     "can be either auto or number(int). "
     "To disable set this to 1. Default is auto.",
