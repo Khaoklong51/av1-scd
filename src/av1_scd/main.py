@@ -95,11 +95,10 @@ def main():
 
     log.debug_log(f"Keyframe Raw list {keyframe_list}")
 
-    is_skip = opt.scd_method in predefined.SKIP_PROCESS_KEYFRAME
+    is_skip = opt.scd_method in predefined.SKIP_PROCESS_KEYFRAME or opt.ignore_scene_len
     keyframe_list1: list[int] = []
 
     if not is_skip:
-        # Only process keyframes if this method is NOT in skip_keyframe
         keyframe_list1 = keyframes.process_keyframe(keyframe_list, frame_count)
     else:
         # If skipping, just use the raw keyframe list as is

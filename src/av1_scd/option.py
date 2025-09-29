@@ -56,6 +56,12 @@ parser.add_argument(
     "--treshold", type=float, default=-2, help="treshold for scene change"
 )
 parser.add_argument(
+    "--ignore-scene-len",
+    action="store_true",
+    default=False,
+    help="skip keyframe processing that make scene len lenght exactly follow the value if method does not expose way to set min or max value of scene. This is not the same as 1 min and 9999 max scene len",
+)
+parser.add_argument(
     "--version",
     action="version",
     version=f"%(prog)s {predefined.VERSION}",
@@ -148,3 +154,4 @@ threshold: float = args.treshold
 transnet_model_path: str | None = args.transnet_model
 vsxvid_height: int = args.vsxvid_height
 ffmpeg_filter: str = args.ffmpeg_filter
+ignore_scene_len: bool = args.ignore_scene_len
