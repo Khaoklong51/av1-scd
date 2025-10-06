@@ -41,20 +41,23 @@ def get_scene_av1an(scence_list: list[int]) -> str:
     class Scenesjson(type.TypedDict):
         frames: int
         scenes: list[Scenedict]
+        split_scenes: list[Scenedict]
 
     scenes_json: Scenesjson = {
+        "frames": scence_list[-1],  # last frame in list
         "scenes": [],
-        "frames": scence_list[-1],  # last frame in the list
+        "split_scenes": [],
     }
 
+    # don't need last frame
     for i in range(len(scence_list) - 1):
-        scenes_json["scenes"].append(
-            {
-                "start_frame": scence_list[i],
-                "end_frame": scence_list[i + 1],
-                "zone_overrides": None,
-            }
-        )
+        dict_data: Scenedict = {
+            "start_frame": scence_list[i],
+            "end_frame": scence_list[i + 1],
+            "zone_overrides": None,
+        }
+        scenes_json["scenes"].append(dict_data)
+        scenes_json["split_scenes"].append(dict_data)
 
     return json.dumps(scenes_json, indent=4, allow_nan=True)
 

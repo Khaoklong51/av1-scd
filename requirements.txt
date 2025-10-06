@@ -1,8 +1,0 @@
-# this is mininal dependencies for runninh program
-colorama
-numpy
-opencv-python
-pymediainfo
-scenedetect<0.7
-termcolor
-tqdm
