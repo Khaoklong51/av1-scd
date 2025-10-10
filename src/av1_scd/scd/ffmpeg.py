@@ -48,7 +48,7 @@ def get_keyframe_ffmpeg_scdet(input_file: Path, frame_count: int) -> list:
 
     command1 = [str(i) for i in command1]
     ffmpeg_data = []
-    with tqdm.tqdm(total=frame_count, desc="Processing frames") as pbar:
+    with tqdm.tqdm(total=frame_count, desc="Processing frames", unit="fps") as pbar:
         p1 = subprocess.Popen(
             command1,
             stdout=subprocess.PIPE,

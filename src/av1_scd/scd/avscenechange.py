@@ -28,7 +28,7 @@ def get_keyframe_avscenechange(input_path: Path, pix_fmt: str, frame_count: int)
     log.debug_log(f"FFmpeg command {' '.join(params1)}")
     log.debug_log(f"av-scenechange commnad {' '.join(params2)}")
 
-    with tqdm.tqdm(total=frame_count, desc="Processing frames") as pbar:
+    with tqdm.tqdm(total=frame_count, desc="Processing frames", unit="fps") as pbar:
         p1 = subprocess.Popen(params1, stdout=subprocess.PIPE,
                               stderr=subprocess.PIPE, text=True)  # fmt: skip
         p2 = subprocess.Popen(params2, stdin=p1.stdout, stdout=subprocess.PIPE,
