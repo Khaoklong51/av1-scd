@@ -6,12 +6,12 @@ def get_print_final() -> str:
     final_help = ""
     if opt.enc_format == predefined.ALL_CFG_OPT[0]:  # x264
         final_help = (
-            f"Feed the config file to {opt.enc_format} using --qpfile "
+            "Feed the config file to x264 using --qpfile "
             "with '--keyint infinite --no-scenecut' option"
         )
     elif opt.enc_format == predefined.ALL_CFG_OPT[1]:  # x265
         final_help = (
-            f"Feed the config file to {opt.enc_format} using --qpfile "
+            "Feed the config file to x265 using --qpfile "
             "with '--keyint -1 --no-scenecut' option"
         )
     elif opt.enc_format == predefined.ALL_CFG_OPT[2]:  # svt-av1
