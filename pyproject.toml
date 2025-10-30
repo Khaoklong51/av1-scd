@@ -38,7 +38,7 @@ transnet = [
 ]
 vsxvid = [
     "vapoursynth>=71",
-    "vstools>=3.4.4",
+    "vsjetpack>=0.8.2",
 ]
 
 [build-system]

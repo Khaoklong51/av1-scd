@@ -15,7 +15,7 @@ def get_pymediainfo_data(input_path: Path) -> vid_data:
     if user_track >= num_tracks or user_track < 0:
         log.error_log(
             f"Invalid Track: {user_track + 1}, "
-            "only {num_tracks} video tracks available."
+            f"only {num_tracks} video tracks available."
         )
 
     user_sl_track = track_list[user_track].to_data()
@@ -26,16 +26,18 @@ def get_pymediainfo_data(input_path: Path) -> vid_data:
 
 def get_ffmpeg_pixfmt(track_data: vid_data) -> str:
     color_space: str = track_data["color_space"]
-    chroma_sub: str = track_data["chroma_subsampling"].replace(":", "")
+    chroma_sub: str = str(track_data["chroma_subsampling"]).replace(":", "")
     bit_depth: int = track_data["bit_depth"]
 
     pix_format = f"{color_space}{chroma_sub}P{bit_depth}"
 
-    ffmpeg_pix_format = predefined.FF_PIXFMT[pix_format]
-    if ffmpeg_pix_format is None:
+    try:
+        ffmpeg_pix_format = predefined.FF_PIXFMT[pix_format]
+    except Exception:
         log.warning_log("Cannot get pixel format. fallback to yuv420p")
         ffmpeg_pix_format = "yuv420p"
-    log.debug_log(f"FFmpeg pixel format {predefined.FF_PIXFMT[pix_format]}")
+
+    log.debug_log(f"FFmpeg pixel format {ffmpeg_pix_format}")
     return ffmpeg_pix_format
 
 
