@@ -30,6 +30,8 @@ def get_print_final() -> str:
             "in ffmpeg also make sure to disable keyframe placement "
             "with the encoder you use"
         )
+    elif opt.enc_format == predefined.ALL_CFG_OPT[6]:  # xav
+        final_help = "Feed the scene file to xavn using -s or --sc option"
 
     return final_help
 
@@ -44,6 +46,11 @@ def main():
     if opt.max_scene_len == -2:
         _, opt.max_scene_len = mediainfo.get_scene_len(track_data)
     frame_count = mediainfo.get_frame_count(track_data)
+    if opt.enc_format == predefined.ALL_CFG_OPT[6]:
+        opt.min_scene_len, opt.max_scene_len = mediainfo.force_xav_len(track_data)
+        log.warning_log(
+            f"xav format select force min and max keyframe to {opt.min_scene_len} and {opt.max_scene_len}"
+        )
     log.info_log(f"Min scene len {opt.min_scene_len}")
     log.info_log(f"Max scene len {opt.max_scene_len}")
     keyframe_list = []

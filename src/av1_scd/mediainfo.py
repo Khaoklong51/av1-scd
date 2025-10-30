@@ -58,6 +58,13 @@ def get_scene_len(track_data: vid_data) -> tuple[int, int]:
     return min_len, max_len
 
 
+def force_xav_len(track_data: vid_data) -> tuple[int, int]:
+    frame_rate = get_framerate(track_data)
+    min_len = round(frame_rate)
+    max_len = min(round(frame_rate * 10), 300)
+    return min_len, max_len
+
+
 def get_framerate(track_data: vid_data) -> float:
     log.debug_log(f"Framerate {str(track_data['frame_rate'])}")
     frame_rate = float(track_data["frame_rate"])
