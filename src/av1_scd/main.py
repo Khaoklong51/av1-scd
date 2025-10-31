@@ -31,7 +31,7 @@ def get_print_final() -> str:
             "with the encoder you use"
         )
     elif opt.enc_format == predefined.ALL_CFG_OPT[6]:  # xav
-        final_help = "Feed the scene file to xavn using -s or --sc option"
+        final_help = "Feed the scene file to xav using -s or --sc option"
 
     return final_help
 
