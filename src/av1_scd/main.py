@@ -21,16 +21,15 @@ def get_print_final() -> str:
         )
     elif (
         opt.enc_format == predefined.ALL_CFG_OPT[3]
-        or opt.enc_format == predefined.ALL_CFG_OPT[4]
-    ):  # av1an and av1an-git
+    ):  # av1an
         final_help = "Feed the scene file to av1an using -s or --scenes option"
-    elif opt.enc_format == predefined.ALL_CFG_OPT[5]:  # ffmpeg
+    elif opt.enc_format == predefined.ALL_CFG_OPT[4]:  # ffmpeg
         final_help = (
             "Feed the content of config file to -force_key_frames:v option "
             "in ffmpeg also make sure to disable keyframe placement "
             "with the encoder you use"
         )
-    elif opt.enc_format == predefined.ALL_CFG_OPT[6]:  # xav
+    elif opt.enc_format == predefined.ALL_CFG_OPT[5]:  # xav
         final_help = "Feed the scene file to xav using -s or --sc option"
 
     return final_help
@@ -127,11 +126,9 @@ def main():
         enc_data = cfg.get_scene_svtapp(keyframe_list1)
     elif opt.enc_format == predefined.ALL_CFG_OPT[3]:  # av1an
         enc_data = cfg.get_scene_av1an(keyframe_list1)
-    elif opt.enc_format == predefined.ALL_CFG_OPT[4]:  # av1an-git
-        enc_data = cfg.get_scene_av1an_git(keyframe_list1)
-    elif opt.enc_format == predefined.ALL_CFG_OPT[5]:  # ffmpeg
+    elif opt.enc_format == predefined.ALL_CFG_OPT[4]:  # ffmpeg
         enc_data = cfg.get_scene_ffmpeg(keyframe_list1)
-    elif opt.enc_format == predefined.ALL_CFG_OPT[6]:  # xav
+    elif opt.enc_format == predefined.ALL_CFG_OPT[5]:  # xav
         enc_data = cfg.get_scene_xav(keyframe_list1)
 
     if opt.output_file is not None:
