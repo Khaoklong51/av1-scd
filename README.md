@@ -108,7 +108,7 @@ usage: av1-scd [-h] -i INPUT [-o OUTPUT] [--min-scene-len MIN_SCENE_LEN] [--max-
                [--pysc-method {adaptive,content,threshold,hash,histogram}] [--pysc-downscale PYSC_DOWNSCALE] [--vs-source {bestsource,ffms2,lsmash}]
                [--vsxvid-height VSXVID_HEIGHT] [--transnet-model TRANSNET_MODEL] [--ffmpeg-filter FFMPEG_FILTER]
 
-py-video-encode v3.0.0
+py-video-encode v3.0.1
 
 options:
   -h, --help            show this help message and exit
