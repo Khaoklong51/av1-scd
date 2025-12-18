@@ -67,7 +67,14 @@ The report keyframe may differ slightly (usually 1,2 or 3 frames) depend on prog
 
 ## Installtion
 
-1. Build wheel
+1. From [Pypi](https://pypi.org/project/av1-scd/)
+
+   ```bash
+   pipx install av1-scd # install with minimal dependencies
+   pipx install av1-scd[vsxvid,transnet] # install with optional vsxvid and transnet dependencies. All option are [vsxvid, transnet, pyscene]
+   ```
+
+2. Build wheel
 
    ```bash
    git clone https://github.com/Khaoklong51/av1-scd.git
@@ -77,16 +84,16 @@ The report keyframe may differ slightly (usually 1,2 or 3 frames) depend on prog
    pipx install dist/*.whl[vsxvid,transnet] # install with optional vsxvid and transnet dependencies. All option are [vsxvid, transnet, pyscene]
    ```
 
-2. Wheel files
+3. Wheel files
 
-Wheel file can be download at [release](https://github.com/Khaoklong51/av1-scd/releases) section\
-\
-then install with pipx or your prefered package manager
+   Wheel file can be download at [release](https://github.com/Khaoklong51/av1-scd/releases) section\
+   \
+   then install with pipx or your prefered package manager
 
-```bash
-pipx install av1-scd.whl # install with minimal dependencies
-pipx install av1-scd.whl # install with optional vsxvid and transnet dependencies. All option are [vsxvid, transnet, pyscene]
-```
+   ```bash
+   pipx install av1-scd.whl # install with minimal dependencies
+   pipx install av1-scd.whl[vsxvid,transnet] # install with optional vsxvid and transnet dependencies. All option are [vsxvid, transnet, pyscene]
+   ```
 
 ## Usage
 
