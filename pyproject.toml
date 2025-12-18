@@ -1,9 +1,23 @@
 [project]
 name = "av1-scd"
 version = "3.0.0"
+authors = [
+  { name="Khaoklong", email="chatmongkol.long@gmail.com" },
+]
 description = "Tool to quickly detect scene change and generate config file for encoder to force keyframe for Encoding video."
 readme = "README.md"
 requires-python = ">=3.12"
+classifiers = [
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: OS Independent",
+    "License :: OSI Approved :: MIT License",
+    "Environment :: Console",
+    "Development Status :: 5 - Production/Stable",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
 dependencies = [
     "colorama>=0.4.6",
     "numpy>=2.2.6",
@@ -13,9 +27,11 @@ dependencies = [
     "termcolor>=3.1.0",
     "tqdm>=4.67.1",
 ]
-authors = [
-    { name = "Khaoklong", email = "chatmongkol.klong@gmail.com" }
-]
+
+[project.urls]
+Homepage = "https://github.com/Khaoklong51/av1-scd/"
+Issues = "https://github.com/Khaoklong51/av1-scd/issues"
+
 
 [dependency-groups]
 dev = [
