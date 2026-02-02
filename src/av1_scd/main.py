@@ -19,9 +19,7 @@ def get_print_final() -> str:
             "Feed the config file to SvtAv1EncApp using -c or --config "
             "with --keyint -1 option"
         )
-    elif (
-        opt.enc_format == predefined.ALL_CFG_OPT[3]
-    ):  # av1an
+    elif opt.enc_format == predefined.ALL_CFG_OPT[3]:  # av1an
         final_help = "Feed the scene file to av1an using -s or --scenes option"
     elif opt.enc_format == predefined.ALL_CFG_OPT[4]:  # ffmpeg
         final_help = (
@@ -45,7 +43,7 @@ def main():
     if opt.max_scene_len == -2:
         _, opt.max_scene_len = mediainfo.get_scene_len(track_data)
     frame_count = mediainfo.get_frame_count(track_data)
-    if opt.enc_format == predefined.ALL_CFG_OPT[6]:
+    if opt.enc_format == predefined.ALL_CFG_OPT[5]:
         opt.min_scene_len, opt.max_scene_len = mediainfo.force_xav_len(track_data)
         log.warning_log(
             f"xav format select force min and max keyframe to {opt.min_scene_len} and {opt.max_scene_len}"
@@ -100,6 +98,9 @@ def main():
         keyframe_list = transnetv2.get_keyframe_transnet(opt.input_file, frame_count)
 
     log.debug_log(f"Keyframe Raw list {keyframe_list}")
+
+    if len(keyframe_list) == 0:
+        log.error_log("Keyframe list empty there are problem getting keyframe list")
 
     is_skip = opt.scd_method in predefined.SKIP_PROCESS_KEYFRAME or opt.ignore_scene_len
     keyframe_list1: list[int] = []
