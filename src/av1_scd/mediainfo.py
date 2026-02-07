@@ -14,8 +14,7 @@ def get_pymediainfo_data(input_path: Path) -> vid_data:
     num_tracks = len(track_list)
     if user_track >= num_tracks or user_track < 0:
         log.error_log(
-            f"Invalid Track: {user_track + 1}, "
-            f"only {num_tracks} video tracks available."
+            f"Invalid Track: {user_track + 1}, only {num_tracks} video tracks available."
         )
 
     user_sl_track = track_list[user_track].to_data()
@@ -25,16 +24,28 @@ def get_pymediainfo_data(input_path: Path) -> vid_data:
 
 
 def get_ffmpeg_pixfmt(track_data: vid_data) -> str:
-    color_space: str = track_data["color_space"]
-    chroma_sub: str = str(track_data["chroma_subsampling"]).replace(":", "")
-    bit_depth: int = track_data["bit_depth"]
+    try:
+        color_space: str = track_data["color_space"]
+    except Exception:
+        log.warning_log("Cannot get color space. Fallback to yuv")
+        color_space = "yuv"
+    try:
+        chroma_sub: str = str(track_data["chroma_subsampling"]).replace(":", "")
+    except Exception:
+        log.warning_log("Cannot get chroma subsampling. Fallback to 4:4:4")
+        chroma_sub = "444"
+    try:
+        bit_depth: int = track_data["bit_depth"]
+    except Exception:
+        log.warning_log("Cannot get chroma subsampling. Fallback to 8 bit")
+        bit_depth = 8
 
     pix_format = f"{color_space}{chroma_sub}P{bit_depth}"
 
     try:
         ffmpeg_pix_format = predefined.FF_PIXFMT[pix_format]
     except Exception:
-        log.warning_log("Cannot get pixel format. fallback to yuv420p")
+        log.warning_log("Cannot get pixel format. Fallback to yuv420p")
         ffmpeg_pix_format = "yuv420p"
 
     log.debug_log(f"FFmpeg pixel format {ffmpeg_pix_format}")
@@ -46,6 +57,11 @@ def get_vid_height(track_data: vid_data) -> int:
     return int(track_data["height"])
 
 
+def get_vid_width(track_data: vid_data) -> int:
+    log.debug_log(f"Video width {str(track_data['width'])}")
+    return int(track_data["width"])
+
+
 def get_frame_count(track_data: vid_data) -> int:
     log.debug_log(f"Framecount {str(track_data['frame_count'])}")
     return int(track_data["frame_count"])
@@ -54,7 +70,7 @@ def get_frame_count(track_data: vid_data) -> int:
 def get_scene_len(track_data: vid_data) -> tuple[int, int]:
     frame_rate = get_framerate(track_data)
     min_len = round(frame_rate)
-    max_len = min(round(frame_rate * 5), 300)
+    max_len = min(round(frame_rate * 10), 300)
     return min_len, max_len
 
 

@@ -19,6 +19,12 @@ ALL_PYSC_METHOD = ["adaptive", "content", "threshold", "hash", "histogram"]
 
 ALL_VS_SOURCE = ["bestsource", "ffms2", "lsmash"]
 
+ALL_AVSC_SPEED = ["standard", "fast"]
+
+ALL_AVSC_SCORE_MODE = ["none", "xav"]
+
+ALL_AVSC_MODE = ["binary", "pyav_scenechange"]
+
 FF_PIXFMT = {
     # list of supported yuv4mpeg format
     "YUV411P8": "yuv411p",

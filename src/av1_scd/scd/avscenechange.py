@@ -1,26 +1,48 @@
 import shutil
 import subprocess
-from av1_scd import util, log
+from av1_scd import util, log, predefined
 from av1_scd import option as opt
 import json
 import tqdm
 import threading
 from pathlib import Path
 
+from av1_scd.predefined import ALL_AVSC_MODE, ALL_AVSC_SCORE_MODE
 
-def get_keyframe_avscenechange(input_path: Path, pix_fmt: str, frame_count: int) -> list:
+
+def get_keyframe_avscenechange(
+    input_path: Path, pix_fmt: str, frame_count: int
+) -> list[int]:
+    if opt.avsc_mode == predefined.ALL_AVSC_MODE[0]:  # binary
+        scene_change = _use_binary(pix_fmt, frame_count)
+    else:
+        scene_change = _use_binding()
+
+    return scene_change
+
+
+def _use_binary(pix_fmt: str, frame_count: int) -> list:
     params1 = [shutil.which('ffmpeg'), '-progress', 'pipe:2',
-               '-loglevel', 'error', '-hide_banner', '-i', input_path]  # fmt: skip
+               '-loglevel', 'error', '-hide_banner', '-i', opt.input_file]  # fmt: skip
 
     if opt.ffmpeg_filter is not None:
-        params1 += ['-filter:v:0', opt.ffmpeg_filter] # fmt: skip
+        params1 += ['-filter:v:0', opt.ffmpeg_filter]  # fmt: skip
 
     params1 += ['-map', '0:v:0', '-pix_fmt', pix_fmt,
-               '-f', 'yuv4mpegpipe', '-strict', '-1', '-'] # fmt: skip
+               '-f', 'yuv4mpegpipe', '-strict', '-1', '-']  # fmt: skip
 
     params2 = [shutil.which('av-scenechange'), '-',
-              '--speed', '0', '--min-scenecut', opt.min_scene_len,
+              '--min-scenecut', opt.min_scene_len,
               '--max-scenecut', opt.max_scene_len]  # fmt: skip
+
+    if not opt.avsc_detect_flashes:
+        params2 += ["--no-flash-detection"]
+
+    mode = 0
+    if opt.avsc_analyze_speed == predefined.ALL_AVSC_SPEED[1]:  # fast
+        mode = 1
+
+    params2 += ["--speed", mode]
 
     params1 = [str(i) for i in params1]
     params2 = [str(i) for i in params2]
@@ -60,6 +82,34 @@ def get_keyframe_avscenechange(input_path: Path, pix_fmt: str, frame_count: int)
         log.warning_log("Possible frame mismatch. This may cause by broken decoding")
 
     return scene_list
+
+
+def _use_binding():
+    import pyav_scenechange
+
+    mode = pyav_scenechange.ScMethod.Standard
+    if opt.avsc_analyze_speed == ALL_AVSC_MODE[1]:
+        mode = pyav_scenechange.ScMethod.Fast
+    if opt.avsc_score_mode == ALL_AVSC_SCORE_MODE[1]:  # xav
+        log.warning_log(
+            "xav mode override min_scene_len, "
+            "max_scene_len, avsc_width, avsc_height, "
+            "avsc_mode, avsc_detect_flashes and avsc_lookahead"
+        )
+        score = pyav_scenechange.smart_scene_detect(str(opt.input_file)).to_list()
+    else:
+        score = pyav_scenechange.scene_detect(
+            str(opt.input_file),
+            opt.min_scene_len,
+            opt.max_scene_len,
+            opt.avsc_width,
+            opt.avsc_height,
+            mode,
+            detect_flashes=opt.avsc_detect_flashes,
+            lookahead_distance=opt.avsc_lookahead,
+        ).to_list()
+
+    return score
 
 
 def _process_scene_data(content: str) -> list:

@@ -34,10 +34,10 @@ def get_print_final() -> str:
 
 
 def main():
-    validate.validate_pg_lib(opt.scd_method)
+    validate.validate_pg_lib()
     log.info_log("Get mediainfo data")
     track_data = mediainfo.get_pymediainfo_data(opt.input_file)
-    # if user does not specify min or max scene use 5 sec framerate
+    # if user does not specify min or max scene use 10 sec framerate
     if opt.min_scene_len == -2:
         opt.min_scene_len, _ = mediainfo.get_scene_len(track_data)
     if opt.max_scene_len == -2:

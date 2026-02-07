@@ -19,7 +19,7 @@ def get_keyframe_ffmpeg_scene(input_file: Path) -> list:
     command1 = [shutil.which("ffmpeg"), "-hide_banner",
                 "-i", input_file, "-filter:v",
                 rf"select=gt(scene\,{local_threshold}),showinfo",
-                "-an", "-f", "null", "-"] # fmt: skip
+                "-an", "-f", "null", "-"]  # fmt: skip
 
     command1 = [str(i) for i in command1]
     p1 = subprocess.run(command1, stderr=subprocess.PIPE, text=True)
@@ -44,7 +44,7 @@ def get_keyframe_ffmpeg_scdet(input_file: Path, frame_count: int) -> list:
                 "-progress", "pipe:1", "-i", input_file,
                 "-filter:v",
                 f"scdet=t={local_threshold}",
-                "-an", "-f", "null", "-"] # fmt: skip
+                "-an", "-f", "null", "-"]  # fmt: skip
 
     command1 = [str(i) for i in command1]
     ffmpeg_data = []
