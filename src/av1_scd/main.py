@@ -17,7 +17,7 @@ def get_print_final() -> str:
     elif opt.enc_format == predefined.ALL_CFG_OPT[2]:  # svt-av1
         final_help = (
             "Feed the config file to SvtAv1EncApp using -c or --config "
-            "with --keyint -1 option"
+            "with --keyint 0 option"
         )
     elif opt.enc_format == predefined.ALL_CFG_OPT[3]:  # av1an
         final_help = "Feed the scene file to av1an using -s or --scenes option"
