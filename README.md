@@ -42,6 +42,7 @@ if any dependencies is missing it will error out anyway.
 - [tqdm](https://github.com/tqdm/tqdm.git)
 - [onnxruntime](https://github.com/microsoft/onnxruntime)
 - [TransetV2](https://github.com/soCzech/TransNetV2.git) The tensorflow model is in "inference/transnetv2-weights/model" folder of the original project if you want to use with this program you need onnx model which you can download [it here](https://huggingface.co/elya5/transnetv2/tree/main)
+- [pyav_scenechange](https://codeberg.org/Khaoklong51/pyav_scenechange) optional dependepcies for av-scenechange
 
 ## Checking Keyframe of video
 
@@ -102,52 +103,77 @@ The report keyframe may differ slightly (usually 1,2 or 3 frames) depend on prog
 ## Parameter
 
 ```text
-usage: av1-scd [-h] -i INPUT [-o OUTPUT] [--min-scene-len MIN_SCENE_LEN] [--max-scene-len MAX_SCENE_LEN]
-               [--scd-method {pyscene,vsxvid,av-scenechange,ffmpeg-scene,ffmpeg-scdet,transnetv2}] [--track TRACK] -f {x264,x265,svt-av1,av1an,av1an-git,ffmpeg,xav}
-               [--print] [--log-level {debug,info,warning,error}] [--treshold TRESHOLD] [--ignore-scene-len] [--version] [--pysc-decode {opencv,pyav,moviepy}]
-               [--pysc-method {adaptive,content,threshold,hash,histogram}] [--pysc-downscale PYSC_DOWNSCALE] [--vs-source {bestsource,ffms2,lsmash}]
-               [--vsxvid-height VSXVID_HEIGHT] [--transnet-model TRANSNET_MODEL] [--ffmpeg-filter FFMPEG_FILTER]
+usage: av1-scd.exe [-h] -i INPUT [-o OUTPUT] [--min-scene-len MIN_SCENE_LEN]
+                   [--max-scene-len MAX_SCENE_LEN]
+                   [--scd-method {pyscene,vsxvid,av-scenechange,ffmpeg-scene,ffmpeg-scdet,transnetv2}]
+                   [--track TRACK] -f {x264,x265,svt-av1,av1an,ffmpeg,xav}
+                   [--print] [--log-level {debug,info,warning,error}]
+                   [--threshold THRESHOLD] [--ignore-scene-len] [--version]
+                   [--pysc-decode {opencv,pyav,moviepy}]
+                   [--pysc-method {adaptive,content,threshold,hash,histogram}]
+                   [--pysc-downscale PYSC_DOWNSCALE]
+                   [--vs-source {bestsource,ffms2,lsmash}]
+                   [--vsxvid-height VSXVID_HEIGHT]
+                   [--transnet-model TRANSNET_MODEL]
+                   [--ffmpeg-filter FFMPEG_FILTER]
+                   [--avsc-analyze-speed {standard,fast}]
+                   [--avsc-detect-flashes | --no-avsc-detect-flashes]
+                   [--avsc-lookahead AVSC_LOOKAHEAD]
+                   [--avsc-score-mode {none,xav}]
+                   [--avsc-mode {binary,pyav_scenechange}]
+                   [--avsc-width AVSC_WIDTH] [--avsc-height AVSC_HEIGHT]
 
 py-video-encode v3.0.1
 
 options:
   -h, --help            show this help message and exit
-  -i, --input INPUT     Path to input file.
-  -o, --output OUTPUT   Path to output file.
+  -i, --input INPUT     Path to input file
+  -o, --output OUTPUT   Path to output file
   --min-scene-len MIN_SCENE_LEN
-                        min lenght for scene detection. Default is 1 sec of video
+                        min lenght for scene detection | Default is 1 sec of
+                        video
   --max-scene-len MAX_SCENE_LEN
-                        max lenght for scene detection. Default is 5 sec of viddeo
+                        max lenght for scene detection | Default is 10 sec of
+                        video
   --scd-method {pyscene,vsxvid,av-scenechange,ffmpeg-scene,ffmpeg-scdet,transnetv2}
-                        scene detection method. Default is pyscene
-  --track TRACK         Track number for video (Index start at 1). Default is 1
-  -f, --format {x264,x265,svt-av1,av1an,av1an-git,ffmpeg,xav}
-                        format of keyframe to feed program.
-  --print               print data to stdout. this will disable the last helper massage.
+                        scene detection method | Default is pyscene
+  --track TRACK         Track number for video (Index start at 1) | Default is
+                        1
+  -f, --format {x264,x265,svt-av1,av1an,ffmpeg,xav}
+                        format of keyframe to feed program
+  --print               print data to stdout. this will disable the last
+                        helper massage
   --log-level {debug,info,warning,error}
-                        log level output to console. Default is info.
-  --treshold TRESHOLD   treshold for scene change
-  --ignore-scene-len    skip keyframe processing that make scene len lenght exactly follow the value if method does not expose way to set min or max value of scene.
-                        This is not the same as 1 min and 9999 max scene len
+                        log level output to console | Default is info
+  --threshold THRESHOLD
+                        treshold for scene change. Only affect pyscene and
+                        ffmpeg scd based method
+  --ignore-scene-len    skip keyframe processing that make scene len lenght
+                        exactly follow the value if method does not expose way
+                        to set min or max value of scene. This is not the same
+                        as 1 min and 9999 max scene len
   --version             print version
 
 pyscene:
   Extra option for pyscene scene detection method
 
   --pysc-decode {opencv,pyav,moviepy}
-                        Decode method for pyscene detect. Default is opencv.
+                        Decode method for pyscene detect | Default is opencv
   --pysc-method {adaptive,content,threshold,hash,histogram}
-                        Scene detect method for pyscene detect. Default is adaptive.
+                        Scene detect method for pyscene detect | Default is
+                        adaptive
   --pysc-downscale PYSC_DOWNSCALE
-                        Downscale factor for pyscene detect method, can be either auto or number(int). To disable set this to 1. Default is auto.
+                        Downscale factor for pyscene detect method, can be
+                        either auto or number(int). To disable set this to 1 |
+                        Default is auto
 
 vapoursynth:
   Extra option for vapousynth to perform vs-xvid scene detection method
 
   --vs-source {bestsource,ffms2,lsmash}
-                        Source method for vapoursynth. Default is ffms2.
+                        Source method for vapoursynth | Default is ffms2
   --vsxvid-height VSXVID_HEIGHT
-                        Height for vsxvid processing. Default is video height.
+                        Height for vsxvid processing | Default is video height
 
 transnet:
   Extra option for transnetv2 model
@@ -159,5 +185,29 @@ av-scenechnage:
   Extra option for av-scenechange
 
   --ffmpeg-filter FFMPEG_FILTER
-                        Extra option to go in to -filter:v in ffmpeg for piping. Useful for downscaling video
+                        Extra option to go in to -filter:v in ffmpeg for
+                        piping. Useful for downscaling video if select the
+                        binary mode
+  --avsc-analyze-speed {standard,fast}
+                        Set av-scenechange analysis speed | Default is
+                        standard
+  --avsc-detect-flashes, --no-avsc-detect-flashes
+                        Enable or disable av-scenechange flash detection
+  --avsc-lookahead AVSC_LOOKAHEAD
+                        Set custom av-scenechange lookahead distance the value
+                        must be an integer more than 0 | Default is 5
+  --avsc-score-mode {none,xav}
+                        Scenechange calculation mode if select xav score will
+                        using weight score logic (xav score mode is only
+                        support if you select the python binding mode) |
+                        Default is none
+  --avsc-mode {binary,pyav_scenechange}
+                        Select whether to use native python binding or binary
+                        | Default is binary
+  --avsc-width AVSC_WIDTH
+                        Video width use to detect scenechange. Useful for
+                        downscaling video
+  --avsc-height AVSC_HEIGHT
+                        Video height use to detect scenechange. Useful for
+                        downscaling video
 ```
